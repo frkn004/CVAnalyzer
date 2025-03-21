@@ -874,3 +874,7 @@ Sorularınız veya geri bildirimleriniz için:
 ---
 
 *Bu döküman, 2025 itibarıyla günceldir. En son geliştirmeler için GitHub deposunu kontrol edin.*
+
+
+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
+
