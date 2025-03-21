@@ -874,6 +874,9 @@ Sorularınız veya geri bildirimleriniz için:
 ---
 
 *Bu döküman, 2025 itibarıyla günceldir. En son geliştirmeler için GitHub deposunu kontrol edin.*
+<<<<<<< HEAD
+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
+=======
 
 
 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
@@ -886,3 +889,4 @@ wget https://huggingface.co/TheBloke/deepseek-coder-7b-instruct-GGUF/resolve/mai
 
 # Phi-2 modeli (~1.5GB) - çok daha küçük
 curl -L https://huggingface.co/TheBloke/phi-2-GGUF/resolve/main/phi-2.Q4_0.gguf --output models/phi-2.Q4_0.gguf
+>>>>>>> fe8fba65cec76fb8aa0f030a28447ee5ae3770dd

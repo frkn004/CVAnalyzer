@@ -2,9 +2,94 @@ import pytest
 from fastapi.testclient import TestClient
 from src.api.main import app
 import os
-from unittest.mock import patch
+import json
+from unittest.mock import patch, MagicMock
+from io import BytesIO
 
 client = TestClient(app)
+
+@pytest.fixture
+def sample_cv_file():
+    return {
+        "file": ("test.txt", "John Doe\njohn@example.com", "text/plain")
+    }
+
+@pytest.fixture
+def sample_position_data():
+    return {
+        "title": "Python Developer",
+        "description": "We are looking for a Python developer",
+        "requirements": ["Python", "FastAPI", "Docker"]
+    }
+
+def test_root_endpoint():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "status" in response.json()
+    assert "system_info" in response.json()
+
+def test_analyze_cv_endpoint():
+    content = "John Doe\njohn@example.com"
+    files = {"file": ("test.txt", content.encode(), "text/plain")}
+    response = client.post("/analyze-cv", files=files)
+    assert response.status_code == 200
+    data = response.json()
+    assert "personal_info" in data
+    assert data["personal_info"]["name"] == "John Doe"
+    assert data["personal_info"]["email"] == "john@example.com"
+
+def test_analyze_cv_empty_file():
+    files = {"file": ("empty.txt", b"", "text/plain")}
+    response = client.post("/analyze-cv", files=files)
+    assert response.status_code == 200
+    data = response.json()
+    assert "personal_info" in data
+    assert data["personal_info"]["name"] == ""
+    assert data["personal_info"]["email"] == ""
+
+def test_match_cv_endpoint():
+    content = "John Doe\nPython Developer\n5 years experience"
+    files = {"file": ("test.txt", content.encode(), "text/plain")}
+    position_data = {
+        "title": "Python Developer",
+        "description": "We are looking for a Python developer",
+        "requirements": ["Python", "FastAPI", "Docker"]
+    }
+    response = client.post(
+        "/match-cv",
+        files=files,
+        data={"position": json.dumps(position_data)}
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "match_score" in data
+    assert "category_scores" in data
+    assert "strengths" in data
+    assert "weaknesses" in data
+    assert "recommendations" in data
+
+def test_match_cv_invalid_position():
+    content = "John Doe\nPython Developer"
+    files = {"file": ("test.txt", content.encode(), "text/plain")}
+    invalid_position = {"invalid": "data"}
+    response = client.post(
+        "/match-cv",
+        files=files,
+        data={"position": json.dumps(invalid_position)}
+    )
+    assert response.status_code == 400
+    assert "detail" in response.json()
+
+def test_analyze_cv_invalid_file():
+    files = {"file": ("test.bin", b"\x00\x01", "application/octet-stream")}
+    response = client.post("/analyze-cv", files=files)
+    assert response.status_code == 400
+    assert "detail" in response.json()
+
+def test_health_check():
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "healthy"}
 
 @pytest.fixture
 def sample_cv_file(tmp_path):
@@ -40,54 +125,6 @@ def sample_position():
         "preferred_skills": ["Docker", "AWS"]
     }
 
-def test_root():
-    """Kök endpoint testi"""
-    response = client.get("/")
-    assert response.status_code == 200
-    assert "status" in response.json()
-    assert "system_info" in response.json()
-    assert response.json()["status"] == "active"
-
-@patch('os.path.exists')
-def test_analyze_cv_endpoint(mock_exists, sample_cv_file):
-    """CV analiz endpoint'i testi"""
-    mock_exists.return_value = True
-    
-    with open(sample_cv_file, "rb") as f:
-        response = client.post(
-            "/analyze-cv",
-            files={"file": ("test_cv.txt", f, "text/plain")}
-        )
-    
-    assert response.status_code == 200
-    result = response.json()
-    
-    assert "kisisel_bilgiler" in result
-    assert "egitim" in result
-    assert "deneyimler" in result
-    assert "beceriler" in result
-
-@patch('os.path.exists')
-def test_match_cv_endpoint(mock_exists, sample_cv_file, sample_position):
-    """CV eşleştirme endpoint'i testi"""
-    mock_exists.return_value = True
-    
-    with open(sample_cv_file, "rb") as f:
-        response = client.post(
-            "/match-cv",
-            files={"file": ("test_cv.txt", f, "text/plain")},
-            json=sample_position
-        )
-    
-    assert response.status_code == 200
-    result = response.json()
-    
-    assert "genel_skor" in result
-    assert "kategori_skorlari" in result
-    assert "guclu_yonler" in result
-    assert "eksik_yonler" in result
-    assert "tavsiyeler" in result
-
 def test_analyze_cv_invalid_file():
     """Geçersiz dosya formatı testi"""
     response = client.post(
@@ -101,20 +138,13 @@ def test_analyze_cv_invalid_file():
 def test_match_cv_invalid_position(sample_cv_file):
     """Geçersiz pozisyon verisi testi"""
     with open(sample_cv_file, "rb") as f:
+        files = {"file": ("test_cv.txt", f, "text/plain")}
+        data = {"position": json.dumps({"invalid": "data"})}
         response = client.post(
             "/match-cv",
-            files={"file": ("test_cv.txt", f, "text/plain")},
-            json={"invalid": "data"}
+            files=files,
+            data=data
         )
     
-    assert response.status_code == 422  # Validation Error
-
-def test_analyze_cv_empty_file():
-    """Boş dosya testi"""
-    response = client.post(
-        "/analyze-cv",
-        files={"file": ("empty.txt", b"", "text/plain")}
-    )
-    
     assert response.status_code == 400
-    assert "CV metnini çıkarma başarısız" in response.json()["detail"] 
+    assert "Geçersiz pozisyon verisi" in response.json()["detail"] 

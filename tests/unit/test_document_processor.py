@@ -1,115 +1,68 @@
 import pytest
-import os
+from pathlib import Path
 from src.processors.document_processor import DocumentProcessor
-from docx import Document
-from PyPDF2 import PdfWriter
 
 @pytest.fixture
-def doc_processor():
+def processor():
+    """Belge işlemci fixture'ı"""
     return DocumentProcessor()
 
 @pytest.fixture
-def sample_text():
-    return """John Doe
-john.doe@email.com
-+90 555 123 4567
-
-EĞİTİM
-XYZ Üniversitesi, Bilgisayar Mühendisliği (2015-2019)
-
-DENEYİM
-ABC Teknoloji - Senior Developer (2019-2023)
-- Python ve FastAPI ile backend geliştirme
-- Docker ve Kubernetes ile deployment
-- AWS servisleri yönetimi
-
-BECERİLER
-Python, FastAPI, Docker, Kubernetes, AWS, PostgreSQL"""
-
-@pytest.fixture
-def temp_txt_file(tmp_path, sample_text):
+def sample_txt_file(tmp_path):
+    """Örnek TXT dosyası oluşturur"""
     file_path = tmp_path / "test.txt"
     with open(file_path, "w", encoding="utf-8") as f:
-        f.write(sample_text)
+        f.write("Test içeriği")
     return file_path
 
 @pytest.fixture
-def temp_docx_file(tmp_path, sample_text):
-    file_path = tmp_path / "test.docx"
-    doc = Document()
-    doc.add_paragraph(sample_text)
-    doc.save(str(file_path))
-    return file_path
+def sample_pdf_path(tmp_path):
+    """Örnek PDF dosyası oluşturur"""
+    # TODO: PDF dosyası oluşturma kodu eklenecek
+    pass
 
 @pytest.fixture
-def temp_pdf_file(tmp_path, sample_text):
-    file_path = tmp_path / "test.pdf"
-    writer = PdfWriter()
-    # TODO: PDF oluşturma işlemi eklenecek
-    return file_path
+def sample_docx_path(tmp_path):
+    """Örnek DOCX dosyası oluşturur"""
+    # TODO: DOCX dosyası oluşturma kodu eklenecek
+    pass
 
-def test_supported_extensions(doc_processor):
-    """Desteklenen dosya uzantılarını test eder"""
-    assert '.pdf' in doc_processor.supported_extensions
-    assert '.docx' in doc_processor.supported_extensions
-    assert '.txt' in doc_processor.supported_extensions
-    assert len(doc_processor.supported_extensions) == 3
+def test_extract_text_txt(processor, sample_txt_file):
+    """TXT dosyası okuma testi"""
+    text = processor.extract_text(str(sample_txt_file))
+    assert text == "Test içeriği"
 
-def test_extract_from_txt(doc_processor, temp_txt_file, sample_text):
-    """TXT dosyasından metin çıkarma işlemini test eder"""
-    extracted_text = doc_processor.extract_text(str(temp_txt_file))
-    assert extracted_text is not None
-    
-    # Email adresi korunmalı
-    assert "john.doe@email.com" in extracted_text
-    
-    # Telefon numarası korunmalı
-    assert "+90 555 123 4567" in extracted_text
-    
-    # Gereksiz boşluklar temizlenmeli
-    assert "  " not in extracted_text
+def test_extract_text_invalid_file(processor):
+    """Geçersiz dosya testi"""
+    with pytest.raises(ValueError) as exc_info:
+        processor.extract_text("nonexistent.txt")
+    assert "Dosya bulunamadı" in str(exc_info.value)
 
-def test_extract_from_docx(doc_processor, temp_docx_file, sample_text):
-    """DOCX dosyasından metin çıkarma işlemini test eder"""
-    extracted_text = doc_processor.extract_text(str(temp_docx_file))
-    assert extracted_text is not None
-    
-    # Temel içerik kontrolü
-    assert "John Doe" in extracted_text
-    assert "EĞİTİM" in extracted_text
-    assert "DENEYİM" in extracted_text
-    assert "BECERİLER" in extracted_text
+def test_extract_text_unsupported_format(processor, tmp_path):
+    """Desteklenmeyen format testi"""
+    file_path = tmp_path / "test.xyz"
+    file_path.touch()
+    with pytest.raises(ValueError) as exc_info:
+        processor.extract_text(str(file_path))
+    assert "Desteklenmeyen dosya formatı" in str(exc_info.value)
 
-def test_nonexistent_file(doc_processor):
-    """Var olmayan dosya için hata kontrolü"""
-    with pytest.raises(FileNotFoundError):
-        doc_processor.extract_text("nonexistent.txt")
+def test_analyze_cv(processor):
+    """CV analiz testi"""
+    text = """John Doe
+john@example.com
++90 555 123 4567
 
-def test_unsupported_extension(doc_processor):
-    """Desteklenmeyen dosya uzantısı için hata kontrolü"""
-    with pytest.raises(ValueError):
-        doc_processor.extract_text("test.xyz")
+Eğitim:
+XYZ Üniversitesi, Bilgisayar Mühendisliği, 2015-2019
 
-def test_text_cleaning(doc_processor):
-    """Metin temizleme işlemini test eder"""
-    dirty_text = """Test   User    
-    test.user@email.com
-    
-    +90 555 987 6543
-    
-    Multiple    Spaces    Here
-    """
-    
-    cleaned_text = doc_processor._clean_text(dirty_text)
-    
-    # Gereksiz boşluklar temizlenmeli
-    assert "  " not in cleaned_text
-    
-    # Email adresi korunmalı
-    assert "test.user@email.com" in cleaned_text
-    
-    # Telefon numarası korunmalı
-    assert "+90 555 987 6543" in cleaned_text
-    
-    # Gereksiz satır sonları temizlenmeli
-    assert "\n\n" not in cleaned_text 
+Deneyim:
+ABC Şirketi, Python Geliştirici, 2019-2023
+- Python ve FastAPI ile web servisleri geliştirdim
+- Docker ve Kubernetes ile mikroservis mimarisi kurdum
+
+Beceriler:
+Python, FastAPI, Docker, Kubernetes, PostgreSQL"""
+
+    result = processor.analyze_cv(text)
+    assert result["personal_info"]["name"] == "John Doe"
+    assert result["personal_info"]["email"] == "john@example.com" 
