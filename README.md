@@ -878,3 +878,11 @@ Sorularınız veya geri bildirimleriniz için:
 
 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
 
+# Homebrew ile wget kurulumu
+brew install wget
+
+# Sonra wget ile indirme
+wget https://huggingface.co/TheBloke/deepseek-coder-7b-instruct-GGUF/resolve/main/deepseek-coder-7b-instruct.Q4_0.gguf -O models/deepseek-coder-7b.Q4_0.gguf
+
+# Phi-2 modeli (~1.5GB) - çok daha küçük
+curl -L https://huggingface.co/TheBloke/phi-2-GGUF/resolve/main/phi-2.Q4_0.gguf --output models/phi-2.Q4_0.gguf
