@@ -1,0 +1,176 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Furkan Sevinç",
+    "email": "sevinc.furkan04@gmail.com",
+    "telefon": "5331673044",
+    "lokasyon": "Ankara",
+    "linkedin": "Link",
+    "website": "sevinc.furkan"
+  },
+  "cv_puanlama": {
+    "toplam_puan": 37,
+    "egitim_puani": 25,
+    "deneyim_puani": 25,
+    "beceri_puani": 30,
+    "proje_puani": 100
+  },
+  "beceriler": {
+    "teknik_beceriler": [
+      "& INTERESTS",
+      "REFERENCES"
+    ],
+    "yazilim_dilleri": [],
+    "diller": [
+      "English (B1)"
+    ],
+    "soft_beceriler": []
+  },
+  "egitim_bilgileri": [
+    {
+      "okul": "OSTİM Technical University",
+      "bolum": "Belirtilmemiş",
+      "mezuniyet": "Belirtilmemiş"
+    }
+  ],
+  "is_deneyimi": [
+    {
+      "sirket": "Maren Robotics Ankara",
+      "pozisyon": "Belirtilmemiş",
+      "tarih": "Sep 2024",
+      "sorumluluklar": [
+        "Sep 2024 Present"
+      ]
+    }
+  ],
+  "projeler": [
+    {
+      "proje_adi": "system using computer vision algorithms to identify and track humans and objects on water",
+      "aciklama": "Maren Robotics Ankara Part-T ime AI Engineer - Sep 2024 Present Developed a vision-based detection  , sending real-time alerts .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "systems for real-time data pr ocessing and decision-making in aquatic envir onments",
+      "aciklama": "Designed and implemented AI models integrated with embedded  .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system efficiency and reliability",
+      "aciklama": "Applied advanced algorithms for object r ecognition , classification , and tracking in dynamic water settings , improving emergency r esponse  .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system for autonomous aquatic r escue devices",
+      "aciklama": "Developed an AI-based surface r escue  .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system that transcribes meeting audio and converts it into actionable tasks for improved productivity",
+      "aciklama": "Created an AI-power ed meeting automation  .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "projects",
+      "aciklama": "Belirtilmemiş",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system optimization",
+      "aciklama": "Provided technical support for AI solutions, focusing on debugging ,  , and performance enhancements .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "project",
+      "aciklama": "Curr ently working on an AI Call Center , automating customer support processes using Natural Language Pr ocessing (NLP).",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "applications",
+      "aciklama": "Limak Cement Ankara AI Intern - Feb 2024 Jul 2025 Cleaned and transformed over 102 million data entries for machine learning  .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "PROJECT EXPERIENCE",
+      "aciklama": "Belirtilmemiş",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system that streamlines the hiring process by automating CV analysis",
+      "aciklama": "AIVA Tech Istanbul AI Interview Automation Platform - AIVA Tech Link: https://mulakat.aivatech.io/login I developed an AI-powered interview automation , interview question generation, and real-time se",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system analyzes candidate CVs to assess qualifications and suitability for specific roles",
+      "aciklama": "CV Analysis: The .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system performs sentiment analysis on their answers",
+      "aciklama": "Real-T ime Sentiment Analysis: While candidates respond, the , providing insights into their emotional tone and communication style.",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system generates a comprehensive performance report and sends it to the HR platform via webhook for further evaluation",
+      "aciklama": "Post-Interview Reporting: After the interview , the . Benefits: This system saves time, enhances objectivity in hiring decisions, and provides valuable insights into candidate suitability beyond just ",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "System for Fasty Life-Sa I developed an AI-powered surface rescue system for Fasty",
+      "aciklama": "Maren Robotics Ankara AI-Powered Surface Rescue  , an autonomous rescue drone, using computer vision algorithms to detect and track humans and objects on the water's surface. The system sends real-tim",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system uses advanced computer vision algorithms to identify and track humans and objects on the water's surface",
+      "aciklama": "Object Detection: The .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system immediately sends notifications to the relevant emer gency response teams",
+      "aciklama": "Real-T ime Notifications: Once a human or object is detected, the .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system",
+      "aciklama": "AI Integration: I integrated AI models into the drone's embedded , enabling real-time decision-making and action.",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "system improves aquatic safety by identifying potential dangers and enabling quick intervention",
+      "aciklama": "Enhanced Safety: The .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "System This system is designed to capture and analyze spoken content during meetings in real-time",
+      "aciklama": "AIVA Tech Istanbul AIVA Meeting Speech Recognition . It converts spoken language into text using advanced speech recognition technology and then applies natural language processing (NLP) to identify k",
+      "kullanilan_teknolojiler": [
+        "and then applies natural language processing (NLP) to identify key topics and individuals mentioned during the discussion. Based on this analysis",
+        "the system automatically generates actionable commands",
+        "such as creating meeting summaries",
+        "scheduling follow-up tasks",
+        "or triggering notifications for specific action items. This automation enhances meeting productivity by ensuring that critical points and decisions are captured accurately and promptly ."
+      ]
+    },
+    {
+      "proje_adi": "system can automatically create commands such as calendar events",
+      "aciklama": "Automated Command Generation: Based on the identified topics and individuals, the , task assignments, or summary reports.",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "project management systems) to streamline post-meeting follow-ups",
+      "aciklama": "Seamless Integration: Easily integrates with existing workflows and tools (e.g., email, calendar , .",
+      "kullanilan_teknolojiler": []
+    }
+  ],
+  "guclu_yonler": [
+    "Eğitim odaklı",
+    "Teknik yetkinlikler"
+  ],
+  "gelistirilmesi_gereken_yonler": [
+    "Yumuşak beceriler (soft skills) vurgulanabilir"
+  ],
+  "uygun_pozisyonlar": [
+    "Bilgisayar Mühendisi",
+    "IT Uzmanı",
+    "Yazılım Mühendisi"
+  ],
+  "yetenek_ozeti": "Furkan Sevinç, None OSTİM Technical University mezunudur. Teknik yetkinlikleri arasında & INTERESTS, REFERENCES bulunmaktadır. Yabancı dil olarak English (B1) bilmektedir. Güçlü yönleri arasında Eğitim odaklı ve Teknik yetkinlikler bulunmaktadır."
+}

@@ -1,0 +1,98 @@
+{
+  "llama3:8b": {
+    "sonuc": {
+      "kisisel_bilgiler": {
+        "isim": "Furkan Sevinç",
+        "email": "sevinc.furkan04@gmail.com",
+        "telefon": "0531 835 41 11"
+      },
+      "egitim": [
+        {
+          "okul": "OSTİM Technical University",
+          "tarih": "Jun 2028"
+        }
+      ],
+      "beceriler": [
+        "Microsoft Office (Excel, Word, PowerPoint)",
+        "Python",
+        "C/C++",
+        "JavaScript",
+        "MySQL",
+        "HTML & CSS",
+        "SQL"
+      ],
+      "is_deneyimi": [
+        {
+          "sirket": "Maren Robotics",
+          "pozisyon": "Part-Time AI Engineer",
+          "tarih": "Sep 2024 - Present"
+        },
+        {
+          "sirket": "AIVA Tech",
+          "pozisyon": "AI Technical and Software Engineer",
+          "tarih": "Aug 2024 - Present"
+        },
+        {
+          "sirket": "Limak Cement",
+          "pozisyon": "AI Intern",
+          "tarih": "Feb 2024 - Jul 2025"
+        },
+        {
+          "sirket": "OSTİM Organized Industrial Zone Directorate",
+          "pozisyon": "AI Intern",
+          "tarih": "Jun 2024 - Sep 2024"
+        }
+      ]
+    },
+    "sure": 19.852460861206055,
+    "kalite_puani": 8.5
+  },
+  "deepseek-coder:6.7b-instruct-q4_K_M": {
+    "sonuc": {
+      "kisisel_bilgiler": {
+        "isim": "Emre Ege",
+        "email": "emre.ege@marenrobotics.com",
+        "telefon": "0533 167 3044"
+      },
+      "egitim": [
+        {
+          "okul": "Maren Robotics",
+          "bolum": "Yazılım Mühendisliği",
+          "tarih": "2019-Şubat - 2023-Temmuz"
+        },
+        {
+          "okul": "Ankara, Türkiye",
+          "bolum": "Bilgisayar Mühendisliği",
+          "tarih": "2015-Subat - 2019-Şubat"
+        }
+      ],
+      "beceriler": [
+        "Python",
+        "C/C++",
+        "JavaScript",
+        "MySQL",
+        "HTML & CSS",
+        "Microsoft Office"
+      ],
+      "is_deneyimi": [
+        {
+          "sirket": "Maren Robotics",
+          "pozisyon": "Yazılım Mühendisi",
+          "tarih": "2019-Şubat - Şuanda"
+        },
+        {
+          "sirket": "AIVA Tech",
+          "pozisyon": "Maliyet Yönetimi Uzmanı",
+          "tarih": "2021-Mart - 2023-Temmuz"
+        },
+        {
+          "sirket": "OSTİMTech Technology Transfer Office",
+          "pozisyon": "Finansal İlişkiler Koordinatörü",
+          "tarih": "2023-Temmuz - Şuanda"
+        }
+      ]
+    },
+    "sure": 31.697153091430664,
+    "kalite_puani": 10.0
+  }
+}

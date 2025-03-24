@@ -1,0 +1,20 @@
+{
+  "pozisyon": "yapay zeka mühendisliği ",
+  "uyumluluk_puani": 70,
+  "detayli_puanlama": {
+    "egitim_uyumu": 70,
+    "deneyim_uyumu": 75,
+    "beceri_uyumu": 65,
+    "proje_uyumu": 70
+  },
+  "eksik_beceriler": [
+    "Eksik beceri bulunamadı"
+  ],
+  "guclu_yonler": [
+    "Bu pozisyon için uyumlu deneyim ve yetenekleriniz var"
+  ],
+  "tavsiyeler": [
+    "Özgeçmişinizde bu pozisyonla ilgili özel projelerinizi vurgulayın"
+  ],
+  "genel_degerlendirme": "CV'niz yapay zeka mühendisliği  pozisyonu için genel olarak uyumlu görünüyor. Detaylı inceleme için başvurunuzu değerlendirebiliriz."
+}

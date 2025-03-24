@@ -1,0 +1,92 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Furkan Sevinç",
+    "email": "sevinc.furkan04@gmail.com",
+    "telefon": "0531 835 41 11",
+    "lokasyon": "Ankara",
+    "linkedin": "",
+    "website": ""
+  },
+  "egitim": [
+    {
+      "okul": "OSTİM Technical University",
+      "bolum": "",
+      "mezuniyet": "Jun 2028",
+      "detaylar": ""
+    }
+  ],
+  "deneyim": [
+    {
+      "sirket": "Maren Robotics",
+      "pozisyon": "Part-Time AI Engineer",
+      "tarih": "Sep 2024 - Present",
+      "sorumluluklar": [
+        "Developed a vision-based detection system...",
+        "Designed and implemented AI models..."
+      ]
+    },
+    {
+      "sirket": "AIVA Tech",
+      "pozisyon": "AI Technical and Software Engineer",
+      "tarih": "Aug 2024 - Present",
+      "sorumluluklar": [
+        "Developed an AI-powered HR Assistant...",
+        "Created an AI-powered meeting automation system..."
+      ]
+    },
+    {
+      "sirket": "Limak Cement",
+      "pozisyon": "AI Intern",
+      "tarih": "Feb 2024 - Jul 2025",
+      "sorumluluklar": [
+        "Cleaned and transformed data...",
+        "Designed and implemented predictive models..."
+      ]
+    }
+  ],
+  "beceriler": {
+    "teknik_beceriler": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML & CSS",
+      "SQL"
+    ],
+    "yazilim_dilleri": [
+      "Python",
+      "C/C++",
+      "JavaScript"
+    ],
+    "diller": [],
+    "soft_beceriler": []
+  },
+  "projeler": [
+    {
+      "proje_adi": "CV Analysis",
+      "aciklama": "",
+      "kullanilan_teknolojiler": [
+        ""
+      ]
+    }
+  ],
+  "anahtar_kelimeler": [
+    "AI",
+    "Machine Learning",
+    "Data Analysis"
+  ],
+  "guclu_yonler": [],
+  "gelistirilmesi_gereken_yonler": [],
+  "uygun_pozisyonlar": [],
+  "kalite_analizi": {
+    "genel_skor": 0,
+    "eksikler": [
+      "No experience in leadership roles"
+    ],
+    "oneriler": [
+      "Developing skills in soft skills and communication"
+    ]
+  },
+  "analiz_tarihi": "24.03.2025 13:08"
+}

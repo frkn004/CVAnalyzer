@@ -1,0 +1,65 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Furkan Sevinç",
+    "email": "sevinc.furkan04@gmail.com",
+    "telefon": "0531 835 41 11",
+    "lokasyon": "Ankara"
+  },
+  "egitim_bilgileri": [
+    {
+      "okul": "OSTİM Technical University",
+      "bolum": "",
+      "mezuniyet_tarihi": "Jun 2028"
+    }
+  ],
+  "is_deneyimi": [
+    {
+      "sirket": "Maren Robotics",
+      "pozisyon": "Part-Time AI Engineer",
+      "tarih": "Sep 2024 - Present",
+      "sorumluluklar": [
+        "Developed a vision-based surface rescue system",
+        "Implemented computer vision algorithms for object detection"
+      ]
+    },
+    {
+      "sirket": "AIVA Tech",
+      "pozisyon": "",
+      "tarih": "",
+      "sorumluluklar": [
+        "Developed an AI-powered interview automation platform",
+        "Designed an AI-powered meeting speech recognition system"
+      ]
+    }
+  ],
+  "proje_deneyimi": [
+    {
+      "baslik": "AI Interview Automation Platform",
+      "aciklama": "Streamlined the hiring process by automating CV analysis, interview question generation, and real-time sentiment analysis.",
+      "link": "https://mulakat.aivatech.io/login"
+    },
+    {
+      "baslik": "AI-Powered Surface Rescue System for Fasty Life-Sa",
+      "aciklama": "Identified and tracked humans and objects on the water's surface using computer vision algorithms, sending real-time notifications for immediate response.",
+      "link": ""
+    },
+    {
+      "baslik": "AIVA Meeting Speech Recognition System",
+      "aciklama": "Captured and analyzed spoken content during meetings in real-time, converting spoken language into text and applying NLP to identify key topics and individuals mentioned.",
+      "link": ""
+    }
+  ],
+  "liderlik_deneyimi": [
+    {
+      "organizasyon": "PandoraAI",
+      "pozisyon": "Financial Relations Coordinator",
+      "tarih": "Feb 2024 - Present"
+    },
+    {
+      "organizasyon": "Artificial Intelligence and Technology Association",
+      "pozisyon": "Co-Chair",
+      "tarih": "Jul 2024 - Present"
+    }
+  ],
+  "analiz_tarihi": "24.03.2025 13:38"
+}

@@ -1,0 +1,46 @@
+AHMET YILMAZ
+ahmet.yilmaz@email.com
+0532 123 45 67
+
+EĞİTİM
+İstanbul Teknik Üniversitesi
+Bilgisayar Mühendisliği Bölümü
+2015-2019
+
+Boğaziçi Üniversitesi
+Yüksek Lisans, Yapay Zeka
+2019-2021
+
+İŞ DENEYİMİ
+ABC Yazılım Ltd. Şti.
+Kıdemli Yazılım Geliştirici
+2021-Günümüze
+
+XYZ Teknoloji A.Ş.
+Yazılım Geliştirici
+2019-2021
+
+YETENEKLER & BECERİLER
+Programlama Dilleri:
+- Python, Java, C++, JavaScript
+- SQL, PHP, Ruby
+
+Teknolojiler:
+- React, Node.js, Django
+- Docker, Kubernetes
+- AWS, Azure, Google Cloud
+
+SERTIFIKALAR
+- AWS Certified Developer - Associate (2022)
+- Microsoft Certified: Azure Developer Associate (2023)
+- Certified Kubernetes Administrator (2021)
+
+DİL BİLGİLERİ
+Türkçe (Anadil)
+İngilizce (İleri Seviye)
+Almanca (Orta Seviye)
+
+PROJELER
+E-Ticaret Platformu (2022): Node.js ve React ile geliştirilmiş büyük ölçekli bir e-ticaret sitesi.
+Yapay Zeka Tabanlı Öneri Sistemi (2021): Python ve TensorFlow kullanılarak geliştirilmiş müşteri davranışlarını analiz eden öneri motoru.
+Mobil Finans Uygulaması (2020): Flutter ile geliştirilmiş çapraz platform finans yönetim uygulaması. 

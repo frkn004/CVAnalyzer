@@ -1,0 +1,100 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Furkan",
+    "email": "",
+    "telefon": "",
+    "lokasyon": "Turkey",
+    "linkedin": "",
+    "web_sitesi": ""
+  },
+  "egitim_bilgileri": [
+    {
+      "okul": "OSTİMTech Technology Transfer Office",
+      "bolum": "",
+      "derece": "",
+      "tarih": "",
+      "notlar": ""
+    }
+  ],
+  "is_deneyimi": [
+    {
+      "sirket": "Maren Robotics",
+      "pozisyon": "Emre Ege",
+      "tarih": "0533 167 3044",
+      "lokasyon": "",
+      "aciklama": "",
+      "anahtar_basarilar": [
+        ""
+      ]
+    },
+    {
+      "sirket": "AIVA Tech",
+      "pozisyon": "Suleyman Kaplan",
+      "tarih": "0531 826 16 42",
+      "lokasyon": "",
+      "aciklama": "",
+      "anahtar_basarilar": [
+        ""
+      ]
+    }
+  ],
+  "projeler": [
+    {
+      "ad": "GÖREV",
+      "tarih": "",
+      "aciklama": "",
+      "teknolojiler": [
+        ""
+      ],
+      "kazanimlar": [
+        ""
+      ]
+    }
+  ],
+  "beceriler": {
+    "teknik_beceriler": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML & CSS",
+      "SQL"
+    ],
+    "yazilim_dilleri": [],
+    "diller": [
+      "English B1"
+    ],
+    "soft_beceriler": []
+  },
+  "liderlik_ve_gönüllülük": [
+    {
+      "organizasyon": "Artificial Intelligence and Technology Association",
+      "pozisyon": "Co-Chair",
+      "tarih": "",
+      "açıklama": ""
+    }
+  ],
+  "sertifikalar": [],
+  "cv_puanlama": {
+    "toplam_puan": 0,
+    "egitim_puani": 20,
+    "deneyim_puani": 40,
+    "beceri_puani": 30,
+    "proje_puani": 10
+  },
+  "guclu_yonler": [
+    "Strong problem-solving skills",
+    "Excellent communication skills"
+  ],
+  "gelistirilmesi_gereken_yonler": [
+    "Time management",
+    "Learning new technologies"
+  ],
+  "uygun_pozisyonlar": [
+    "Software Engineer",
+    "Data Scientist",
+    "AI Researcher"
+  ],
+  "yetenek_ozeti": ""
+}

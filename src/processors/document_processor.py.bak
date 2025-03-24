@@ -341,7 +341,7 @@ class DocumentProcessor:
                 line = line.strip()
                 if not line:
                     continue
-            
+                    
                 if line.upper() == line and line in upper_headers:
                     # Yeni bölüm başlığı
                     if current_section:
@@ -384,7 +384,7 @@ class DocumentProcessor:
                 line = line.strip()
                 if not line:
                     continue
-            
+                    
                 # Satırın bir bölüm başlığı olup olmadığını kontrol et
                 found_section = False
                 for section_name, patterns in section_patterns.items():
@@ -503,7 +503,7 @@ class DocumentProcessor:
         for paragraph in paragraphs:
             if not any(uni in paragraph.lower() for uni in universities):
                 continue
-            
+                
             edu_entry = {
                 'institution': '',
                 'degree': '',
@@ -628,7 +628,7 @@ class DocumentProcessor:
         for paragraph in paragraphs:
             if len(paragraph.strip()) < 10:  # Çok kısa paragrafları atla
                 continue
-            
+                
             exp_entry = {
                 'company': '',
                 'title': '',
@@ -805,7 +805,7 @@ class DocumentProcessor:
                 line = line.strip()
                 if not line or any(header.lower() in line.lower() for header in ["skills", "competencies", "abilities"]):
                     continue
-            
+                
                 logger.info(f"İşlenen beceri satırı: {line}")
                     
                 # Satırda ayırıcı var mı kontrol et
@@ -858,7 +858,7 @@ class DocumentProcessor:
                 line = line.strip()
                 if not line:
                     continue
-            
+                    
                 # Virgül, noktalı virgül veya bullet ile ayrılmış olabilir
                 if ',' in line:
                     skills.extend([s.strip() for s in line.split(',') if s.strip()])
@@ -883,7 +883,7 @@ class DocumentProcessor:
             # Çok kısa veya çok uzunsa atla
             if len(skill) < 2 or len(skill) > 50:
                 continue
-            
+                
             # Noktalama işaretlerini temizle
             skill = skill.strip('.,;:()')
                 
@@ -920,10 +920,10 @@ class DocumentProcessor:
                 line_lower = line.lower().strip()
                 if "languages" in line_lower or "language" in line_lower or "dil" in line_lower:
                     continue
-            
+                    
                 if not line or len(line) < 3:
                     continue
-            
+                    
                 # Önce dil-seviye formatını kontrol et (İngilizce B2, English Advanced, vb.)
                 for lang in common_languages:
                     if lang in line_lower:
@@ -954,7 +954,7 @@ class DocumentProcessor:
                 line_lower = line.lower().strip()
                 if not line:
                     continue
-            
+                    
                 # Dil ve seviye eşleşmesi
                 for lang in common_languages:
                     if lang in line_lower:
@@ -979,7 +979,7 @@ class DocumentProcessor:
             line = line.strip()
             if not line:
                 continue
-            
+                
             # Sertifika olabilecek kelimeleri içeriyor mu kontrol et
             cert_keywords = ['sertifika', 'belge', 'certificate', 'certified', 'credential']
             has_cert_keyword = any(keyword in line.lower() for keyword in cert_keywords)

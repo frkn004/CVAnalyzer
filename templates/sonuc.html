@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Analiz Sonucu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #f8f9fa; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container { 
+            max-width: 900px; 
+            margin-top: 2rem;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { 
+            color: #343a40; 
+        }
+        .section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .card {
+            margin-bottom: 1rem;
+            border: none;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        .progress {
+            height: 25px;
+        }
+        .back-btn {
+            margin-top: 2rem;
+        }
+        .badge {
+            font-size: 0.85rem;
+            padding: 0.5em 0.8em;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .strength-item, .weakness-item {
+            margin-bottom: 0.75rem;
+        }
+        .position-form {
+            background-color: #f1f3f5;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">CV Analiz Sonucu</h1>
+        
+        <div class="position-form section">
+            <h3>Pozisyon Uyumluluğu Kontrol Et</h3>
+            <form action="/pozisyon_analiz" method="post">
+                <div class="mb-3">
+                    <label for="pozisyon" class="form-label">Pozisyon Bilgisi Girin</label>
+                    <input type="text" class="form-control" id="pozisyon" name="pozisyon" 
+                           placeholder="Örnek: Senior Python Developer" required>
+                </div>
+                <input type="hidden" name="session_id" value="{{ session_id }}">
+                <input type="hidden" name="model" value="{{ model }}">
+                <button type="submit" class="btn btn-primary">Pozisyon Uyumluluğunu Analiz Et</button>
+            </form>
+        </div>
+        
+        <!-- Kişisel Bilgiler -->
+        <div class="section">
+            <h3>📋 Kişisel Bilgiler</h3>
+            <div class="card">
+                <div class="card-body">
+                    <p><strong>İsim:</strong> {% if analiz.kisisel_bilgiler.isim %}{{ analiz.kisisel_bilgiler.isim }}{% else %}Belirtilmemiş{% endif %}</p>
+                    
+                    <p><strong>E-posta:</strong> 
+                    {% if analiz.kisisel_bilgiler.email %}
+                        {{ analiz.kisisel_bilgiler.email }}
+                    {% elif analiz.kisisel_bilgiler.e_posta %}
+                        {{ analiz.kisisel_bilgiler.e_posta }}
+                    {% else %}
+                        Belirtilmemiş
+                    {% endif %}
+                    </p>
+                    
+                    <p><strong>Telefon:</strong> {% if analiz.kisisel_bilgiler.telefon %}{{ analiz.kisisel_bilgiler.telefon }}{% else %}Belirtilmemiş{% endif %}</p>
+                    <p><strong>Lokasyon:</strong> {% if analiz.kisisel_bilgiler.lokasyon %}{{ analiz.kisisel_bilgiler.lokasyon }}{% else %}Belirtilmemiş{% endif %}</p>
+                    
+                    {% if analiz.kisisel_bilgiler.linkedin and analiz.kisisel_bilgiler.linkedin != "Belirtilmemiş" %}
+                    <p><strong>LinkedIn:</strong> {{ analiz.kisisel_bilgiler.linkedin }}</p>
+                    {% endif %}
+                    
+                    {% if analiz.kisisel_bilgiler.web_sitesi and analiz.kisisel_bilgiler.web_sitesi != "Belirtilmemiş" %}
+                    <p><strong>Web Sitesi:</strong> {{ analiz.kisisel_bilgiler.web_sitesi }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- CV Puanlama -->
+        <div class="section">
+            <h3>📊 CV Puanlama</h3>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="mb-3">Toplam Puan: {{ analiz.cv_puanlama.toplam_puan|default('0') }}/100</h4>
+                    
+                    <p><strong>Eğitim Puanı:</strong></p>
+                    <div class="progress mb-3">
+                        {% set egitim_puani = analiz.cv_puanlama.egitim_puani|default('0') %}
+                        <div class="progress-bar" role="progressbar" 
+                             style="width: {{ egitim_puani }}%;" 
+                             aria-valuenow="{{ egitim_puani }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ egitim_puani }}%
+                        </div>
+                    </div>
+                    
+                    <p><strong>Deneyim Puanı:</strong></p>
+                    <div class="progress mb-3">
+                        {% set deneyim_puani = analiz.cv_puanlama.deneyim_puani|default('0') %}
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ deneyim_puani }}%;" 
+                             aria-valuenow="{{ deneyim_puani }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ deneyim_puani }}%
+                        </div>
+                    </div>
+                    
+                    <p><strong>Beceri Puanı:</strong></p>
+                    <div class="progress mb-3">
+                        {% set beceri_puani = analiz.cv_puanlama.beceri_puani|default('0') %}
+                        <div class="progress-bar bg-info" role="progressbar" 
+                             style="width: {{ beceri_puani }}%;" 
+                             aria-valuenow="{{ beceri_puani }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ beceri_puani }}%
+                        </div>
+                    </div>
+                    
+                    <p><strong>Proje Puanı:</strong></p>
+                    <div class="progress mb-3">
+                        {% set proje_puani = analiz.cv_puanlama.proje_puani|default('0') %}
+                        <div class="progress-bar bg-warning" role="progressbar" 
+                             style="width: {{ proje_puani }}%;" 
+                             aria-valuenow="{{ proje_puani }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ proje_puani }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Güçlü ve Geliştirilmesi Gereken Yönler -->
+        <div class="section">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>💪 Güçlü Yönler</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                {% if analiz.guclu_yonler and analiz.guclu_yonler|length > 0 %}
+                                    {% for gucu in analiz.guclu_yonler %}
+                                        {% if gucu and gucu != "Belirtilmemiş" %}
+                                        <li class="strength-item">✅ {{ gucu }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <li class="text-muted">Güçlü yön belirtilmemiş.</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3>🔍 Geliştirilmesi Gereken Yönler</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                {% if analiz.gelistirilmesi_gereken_yonler and analiz.gelistirilmesi_gereken_yonler|length > 0 %}
+                                    {% for zayif in analiz.gelistirilmesi_gereken_yonler %}
+                                        {% if zayif and zayif != "Belirtilmemiş" %}
+                                        <li class="weakness-item">⚠️ {{ zayif }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <li class="text-muted">Geliştirilmesi gereken yön belirtilmemiş.</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Uygun Pozisyonlar -->
+        <div class="section">
+            <h3>🎯 Uygun Pozisyonlar</h3>
+            <div class="card">
+                <div class="card-body">
+                    {% for pozisyon in analiz.uygun_pozisyonlar %}
+                    <span class="badge bg-primary">{{ pozisyon }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Yetenek Özeti -->
+        <div class="section">
+            <h3>📝 Yetenek Özeti</h3>
+            <div class="card">
+                <div class="card-body">
+                    <p>{{ analiz.yetenek_ozeti }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Eğitim Bilgileri -->
+        <div class="section">
+            <h3>🎓 Eğitim Bilgileri</h3>
+            {% if analiz.egitim_bilgileri and analiz.egitim_bilgileri|length > 0 %}
+                {% for edu in analiz.egitim_bilgileri %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{% if edu.okul %}{{ edu.okul }}{% else %}Belirtilmemiş{% endif %}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{% if edu.bolum %}{{ edu.bolum }}{% else %}Belirtilmemiş{% endif %}</h6>
+                        <p><strong>Derece:</strong> {% if edu.derece %}{{ edu.derece }}{% else %}Belirtilmemiş{% endif %}</p>
+                        <p><strong>Tarih:</strong> {% if edu.tarih %}{{ edu.tarih }}{% else %}Belirtilmemiş{% endif %}</p>
+                        {% if edu.notlar and edu.notlar != "Belirtilmemiş" %}
+                        <p><strong>Notlar:</strong> {{ edu.notlar }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-muted">Eğitim bilgisi belirtilmemiş.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- İş Deneyimi -->
+        <div class="section">
+            <h3>💼 İş Deneyimi</h3>
+            {% for job in analiz.is_deneyimi %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{% if job.sirket %}{{ job.sirket }}{% else %}Belirtilmemiş{% endif %}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{% if job.pozisyon %}{{ job.pozisyon }}{% else %}Belirtilmemiş{% endif %}</h6>
+                    <p><strong>Tarih:</strong> {% if job.tarih %}{{ job.tarih }}{% else %}Belirtilmemiş{% endif %}</p>
+                    <p><strong>Lokasyon:</strong> {% if job.lokasyon %}{{ job.lokasyon }}{% else %}Belirtilmemiş{% endif %}</p>
+                    
+                    {% if job.aciklama and job.aciklama != "Belirtilmemiş" %}
+                    <p><strong>Açıklama:</strong> {{ job.aciklama }}</p>
+                    {% endif %}
+                    
+                    {% if job.anahtar_basarilar and job.anahtar_basarilar|length > 0 %}
+                    <p><strong>Anahtar Başarılar:</strong></p>
+                    <ul>
+                        {% for basari in job.anahtar_basarilar %}
+                        {% if basari and basari != "Belirtilmemiş" %}
+                        <li>{{ basari }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Projeler -->
+        <div class="section">
+            <h3>🔨 Projeler</h3>
+            {% if analiz.projeler and analiz.projeler|length > 0 %}
+                {% for proje in analiz.projeler %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{% if proje.ad %}{{ proje.ad }}{% else %}Belirtilmemiş{% endif %}</h5>
+                        
+                        {% if proje.tarih and proje.tarih != "Belirtilmemiş" %}
+                        <p><strong>Tarih:</strong> {{ proje.tarih }}</p>
+                        {% endif %}
+                        
+                        {% if proje.aciklama and proje.aciklama != "Belirtilmemiş" %}
+                        <p>{{ proje.aciklama }}</p>
+                        {% endif %}
+                        
+                        {% if proje.teknolojiler and proje.teknolojiler|length > 0 %}
+                        <p><strong>Kullanılan Teknolojiler:</strong></p>
+                        <div class="mb-2">
+                            {% for tech in proje.teknolojiler %}
+                            {% if tech and tech != "Belirtilmemiş" %}
+                            <span class="badge bg-secondary">{{ tech }}</span>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        {% if proje.kazanimlar and proje.kazanimlar|length > 0 %}
+                        <p><strong>Kazanımlar:</strong></p>
+                        <ul>
+                            {% for kazanim in proje.kazanimlar %}
+                            {% if kazanim and kazanim != "Belirtilmemiş" %}
+                            <li>{{ kazanim }}</li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-muted">Proje bilgisi belirtilmemiş.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Beceriler -->
+        <div class="section">
+            <h3>🛠️ Beceriler</h3>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Teknik Beceriler</h5>
+                            <div class="mb-3">
+                                {% if analiz.beceriler.teknik_beceriler and analiz.beceriler.teknik_beceriler|length > 0 %}
+                                    {% for beceri in analiz.beceriler.teknik_beceriler %}
+                                        {% if beceri and beceri != "Belirtilmemiş" %}
+                                        <span class="badge bg-info text-dark">{{ beceri }}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-muted">Teknik beceri belirtilmemiş.</p>
+                                {% endif %}
+                            </div>
+                            
+                            <h5>Yazılım Dilleri</h5>
+                            <div class="mb-3">
+                                {% if analiz.beceriler.yazilim_dilleri and analiz.beceriler.yazilim_dilleri|length > 0 %}
+                                    {% for dil in analiz.beceriler.yazilim_dilleri %}
+                                        {% if dil and dil != "Belirtilmemiş" %}
+                                        <span class="badge bg-success">{{ dil }}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-muted">Yazılım dili belirtilmemiş.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h5>Diller</h5>
+                            <div class="mb-3">
+                                {% if analiz.beceriler.diller and analiz.beceriler.diller|length > 0 %}
+                                    {% for dil in analiz.beceriler.diller %}
+                                        {% if dil and dil != "Belirtilmemiş" %}
+                                        <span class="badge bg-warning text-dark">{{ dil }}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-muted">Dil bilgisi belirtilmemiş.</p>
+                                {% endif %}
+                            </div>
+                            
+                            <h5>Soft Beceriler</h5>
+                            <div class="mb-3">
+                                {% if analiz.beceriler.soft_beceriler and analiz.beceriler.soft_beceriler|length > 0 %}
+                                    {% for beceri in analiz.beceriler.soft_beceriler %}
+                                        {% if beceri and beceri != "Belirtilmemiş" %}
+                                        <span class="badge bg-secondary">{{ beceri }}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-muted">Soft beceri belirtilmemiş.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center back-btn">
+            <a href="/" class="btn btn-secondary">Ana Sayfaya Dön</a>
+            <a href="/static/analiz_sonuc_{{ session_id }}.json" class="btn btn-primary" download>Sonuçları İndir (JSON)</a>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

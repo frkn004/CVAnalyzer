@@ -1,0 +1,57 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "CV'den isim çıkarılamadı",
+    "email": "email@bulunamadi.com",
+    "telefon": "Belirtilmemiş",
+    "lokasyon": "Belirtilmemiş",
+    "linkedin": "",
+    "web_sitesi": ""
+  },
+  "egitim_bilgileri": [
+    {
+      "okul": "Belirtilmemiş",
+      "bolum": "Belirtilmemiş",
+      "derece": "Belirtilmemiş",
+      "tarih": "Belirtilmemiş",
+      "notlar": ""
+    }
+  ],
+  "is_deneyimi": [
+    {
+      "sirket": "Belirtilmemiş",
+      "pozisyon": "Belirtilmemiş",
+      "tarih": "Belirtilmemiş",
+      "lokasyon": "Belirtilmemiş",
+      "aciklama": "Belirtilmemiş",
+      "anahtar_basarilar": []
+    }
+  ],
+  "projeler": [],
+  "beceriler": {
+    "teknik_beceriler": [],
+    "yazilim_dilleri": [],
+    "diller": [],
+    "soft_beceriler": []
+  },
+  "liderlik_ve_gönüllülük": [],
+  "sertifikalar": [],
+  "cv_puanlama": {
+    "toplam_puan": 0,
+    "egitim_puani": 0,
+    "deneyim_puani": 0,
+    "beceri_puani": 0,
+    "proje_puani": 0
+  },
+  "guclu_yonler": [
+    "Bilgi yetersiz"
+  ],
+  "gelistirilmesi_gereken_yonler": [
+    "Bilgi yetersiz"
+  ],
+  "uygun_pozisyonlar": [
+    "Belirtilmemiş"
+  ],
+  "yetenek_ozeti": "CV analizi sırasında hata oluştu, yetenek özeti çıkarılamadı.",
+  "_hata": "JSON ayrıştırılamadı: Extra data: line 11 column 1 (char 118)",
+  "_raw_text": "{\n  \"isim\": \"Furkan Koca\",\n  \"email\": \"\",\n  \"telefon\": \"\",\n  \"lokasyon\": \"\",\n  \"linkedin\": \"\",\n  \"we"
+}

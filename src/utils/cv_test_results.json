@@ -1,0 +1,201 @@
+{
+  "ai_analysis": null,
+  "traditional_analysis": {
+    "kisisel_bilgiler": {
+      "isim": "Ahmet Yılmaz",
+      "email": "ahmet.yilmaz@email.com",
+      "telefon": "+905551234567",
+      "lokasyon": "İstanbul",
+      "linkedin": "ahmetyilmaz",
+      "website": "ahmet.yilmaz"
+    },
+    "egitim": [
+      {
+        "okul": "Üniversitesi",
+        "bolum": "Lisans",
+        "mezuniyet": "Belirtilmemiş"
+      },
+      {
+        "okul": "Belirtilmemiş",
+        "bolum": "Kıdemli Veri Bilim",
+        "mezuniyet": "Belirtilmemiş"
+      },
+      {
+        "okul": "Belirtilmemiş",
+        "bolum": "5 kişilik veri bilim",
+        "mezuniyet": "Belirtilmemiş"
+      },
+      {
+        "okul": "Üniversitesi",
+        "bolum": "Bölümü",
+        "derece": "banlı bir öneri sistemi tasarladım ve uyguladım",
+        "tarih": "Belirtilmemiş"
+      }
+    ],
+    "deneyim": [
+      {
+        "sirket": "e sahip yazılım mühendisi. Büyük veri analizi ve doğal dil işleme projelerinde uzmanlık. Fintech ve e-ticaret sektörlerinde müşteri odaklı çözümler geliştirme konusunda kanıtlanmış başarı.",
+        "pozisyon": "AI Engineer",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": [
+          "Fintech ve e-ticaret sektörlerinde müşteri odaklı çözümler geliştirme konusunda kanıtlanmış başarı."
+        ]
+      },
+      {
+        "sirket": "EĞİTİM",
+        "pozisyon": "Boğaziçi Üniversitesi, İstanbul",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": [
+          "Haziran 2019"
+        ]
+      },
+      {
+        "sirket": "GPA: 3.65/4.00",
+        "pozisyon": "AI Engineer",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": []
+      },
+      {
+        "sirket": "Onur öğrencisi",
+        "pozisyon": "AI Engineer",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": []
+      },
+      {
+        "sirket": "Bitirme Projesi: \"Derin Öğrenme ile Türkçe Metin Sınıflandırma\"",
+        "pozisyon": "AI Engineer",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": []
+      },
+      {
+        "sirket": "İŞ DENEYİMİ",
+        "pozisyon": "ABC Teknoloji, İstanbul",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": [
+          "Günümüz"
+        ]
+      },
+      {
+        "sirket": "Finansal sahtekarlık tespiti için makine öğrenmesi modelleri geliştirdim, sahte işlem tespitinde %30 artış sağladım",
+        "pozisyon": "AI Engineer",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": []
+      },
+      {
+        "sirket": "Müşteri davranış analizi için NLP tabanlı bir öneri sistemi tasarladım ve uyguladım",
+        "pozisyon": "AI Engineer",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": []
+      },
+      {
+        "sirket": "5 kişilik veri bilimi ekibini yönettim ve yeni ekip üyelerinin eğitimini sağladım",
+        "pozisyon": "AI Engineer",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": []
+      },
+      {
+        "sirket": "Python, TensorFlow ve PyTorch kullanarak derin öğrenme modelleri geliştirdim",
+        "pozisyon": "AI Engineer",
+        "tarih": "Belirtilmemiş",
+        "sorumluluklar": []
+      }
+    ],
+    "beceriler": {
+      "teknik_beceriler": [
+        "TensorFlow",
+        "PyTorch",
+        "Pandas",
+        "NumPy",
+        "scikit-learn",
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "Azure",
+        "Git",
+        "MongoDB",
+        "PostgreSQL",
+        "Redis",
+        "i: Python",
+        "JavaScript",
+        "Java",
+        "SQL",
+        "Yapay Zeka",
+        "Machine Learning",
+        "Makine Öğrenmesi",
+        "Deep Learning",
+        "Nlp",
+        "Doğal Dil Işleme",
+        "Nesne Tanıma",
+        "Sınıflandırma",
+        "Veri Bilimi",
+        "Algoritma",
+        "Duygu Analizi"
+      ],
+      "yazilim_dilleri": [
+        "Python",
+        "Java",
+        "JavaScript",
+        "R",
+        "SQL",
+        "Javascript",
+        "Sql"
+      ],
+      "diller": [],
+      "soft_beceriler": []
+    },
+    "anahtar_kelimeler": [
+      "analizi",
+      "geliştirdim",
+      "stanbul",
+      "kullanarak",
+      "tensorflow",
+      "veri",
+      "com",
+      "duygu",
+      "için",
+      "makine"
+    ],
+    "analiz_tarihi": "24-03-2025 11:16",
+    "kalite_skoru": {
+      "genel_skor": 82,
+      "eksikler": [
+        "Bir eğitim kaydında mezuniyet tarihi eksik",
+        "Bir eğitim kaydında okul/üniversite bilgisi eksik",
+        "Bir eğitim kaydında mezuniyet tarihi eksik",
+        "Bir eğitim kaydında okul/üniversite bilgisi eksik",
+        "Bir eğitim kaydında mezuniyet tarihi eksik",
+        "Bir eğitim kaydında mezuniyet tarihi eksik",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "İş deneyiminde sorumluluklar/başarılar detaylandırılmamış",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "İş deneyiminde sorumluluklar/başarılar detaylandırılmamış",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "İş deneyiminde sorumluluklar/başarılar detaylandırılmamış",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "İş deneyiminde sorumluluklar/başarılar detaylandırılmamış",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "İş deneyiminde sorumluluklar/başarılar detaylandırılmamış",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "İş deneyiminde sorumluluklar/başarılar detaylandırılmamış",
+        "Bir deneyim kaydında tarih bilgisi eksik",
+        "İş deneyiminde sorumluluklar/başarılar detaylandırılmamış"
+      ],
+      "oneriler": [
+        "Her iş deneyimi için somut başarılar ve sorumluluklar ekleyin",
+        "Her iş deneyimi için somut başarılar ve sorumluluklar ekleyin",
+        "Her iş deneyimi için somut başarılar ve sorumluluklar ekleyin",
+        "Her iş deneyimi için somut başarılar ve sorumluluklar ekleyin",
+        "Her iş deneyimi için somut başarılar ve sorumluluklar ekleyin",
+        "Her iş deneyimi için somut başarılar ve sorumluluklar ekleyin",
+        "Her iş deneyimi için somut başarılar ve sorumluluklar ekleyin",
+        "Bildiğiniz yabancı dilleri ve seviyelerini ekleyin",
+        "İletişim, takım çalışması gibi soft becerilerinizi ekleyin",
+        "CV'niz iyi durumda, küçük iyileştirmelerle mükemmel hale getirebilirsiniz"
+      ]
+    }
+  },
+  "example_cv": "\nAhmet Yılmaz\nİstanbul, Türkiye | ahmet.yilmaz@email.com | +90 555 123 4567 | linkedin.com/in/ahmetyilmaz | github.com/ahmetyilmaz\n\nPROFİL\nMakine öğrenmesi ve yapay zeka konularında 3+ yıl deneyime sahip yazılım mühendisi. Büyük veri analizi ve doğal dil işleme projelerinde uzmanlık. Fintech ve e-ticaret sektörlerinde müşteri odaklı çözümler geliştirme konusunda kanıtlanmış başarı.\n\nEĞİTİM\nBoğaziçi Üniversitesi, İstanbul\nBilgisayar Mühendisliği Bölümü, Lisans\nEylül 2015 - Haziran 2019\n• GPA: 3.65/4.00\n• Onur öğrencisi\n• Bitirme Projesi: \"Derin Öğrenme ile Türkçe Metin Sınıflandırma\"\n\nİŞ DENEYİMİ\nABC Teknoloji, İstanbul\nKıdemli Veri Bilimcisi\nOcak 2022 - Günümüz\n• Finansal sahtekarlık tespiti için makine öğrenmesi modelleri geliştirdim, sahte işlem tespitinde %30 artış sağladım\n• Müşteri davranış analizi için NLP tabanlı bir öneri sistemi tasarladım ve uyguladım\n• 5 kişilik veri bilimi ekibini yönettim ve yeni ekip üyelerinin eğitimini sağladım\n• Python, TensorFlow ve PyTorch kullanarak derin öğrenme modelleri geliştirdim\n\nXYZ Yazılım, Ankara\nYapay Zeka Mühendisi\nTemmuz 2019 - Aralık 2021\n• E-ticaret platformu için ürün öneri algoritmasını geliştirdim, tıklama oranlarında %25 artış sağladı\n• Kullanıcı yorumlarından duygu analizi yapan bir sistem tasarladım ve uyguladım\n• Docker ve Kubernetes kullanarak ML modellerinin dağıtımını otomatikleştirdim\n• 3 başarılı AI projesinin liderliğini yaptım ve müşteri memnuniyetini artırdım\n\nPROJELER\nDuygu Analizi API'si\n• Python ve FastAPI kullanarak açık kaynaklı bir duygu analizi API'si geliştirdim\n• 10.000+ günlük istek işleme kapasitesine sahip, %95 doğruluk oranı\n• GitHub'da 200+ yıldız aldı\n\nGörüntü Tanıma Uygulaması\n• TensorFlow ve React Native kullanarak mobil görüntü tanıma uygulaması geliştirdim\n• YOLO algoritması ile gerçek zamanlı nesne tanıma uygulaması\n• 10.000+ indirme, 4.7/5 kullanıcı puanı\n\nBECERİLER\nProgramlama Dilleri: Python, JavaScript, Java, SQL, R\nTeknolojiler & Araçlar: TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy, Docker, Kubernetes, Git, AWS, Azure ML\nVeri Tabanları: PostgreSQL, MongoDB, Redis, Elasticsearch\nDiller: Türkçe (Anadil), İngilizce (İleri Seviye), Almanca (Orta Seviye)\nSoft Skills: Takım Liderliği, Proje Yönetimi, Problem Çözme, İletişim, Sunum Becerileri\n\nSERTİFİKALAR\n• Deep Learning Specialization - Coursera (Andrew Ng)\n• TensorFlow Developer Certificate - Google\n• AWS Certified Machine Learning - Specialty\n• Scrum Master Certification\n\nGÖNÜLLÜ ÇALIŞMALAR\nKod Vakfı, İstanbul\nEğitmen - Ocak 2020 - Günümüz\n• Dezavantajlı gençlere programlama ve yapay zeka eğitimleri veriyorum\n• 100+ öğrenciye mentorluk yaptım\n\nKONFERANSLAR & YAYINLAR\n• \"Türkçe NLP Uygulamaları\" - AI Summit İstanbul 2022 (Konuşmacı)\n• \"Fintech Sektöründe Makine Öğrenmesi\" - IEEE Conference 2021 (Makale)\n"
+}

@@ -1,20 +1,39 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form, Query, BackgroundTasks
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
-from typing import Dict, Any, List, Optional, Tuple
+import sys
 import os
-from pathlib import Path
+
+# Proje kök dizinini Python yoluna ekle
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form, Query, BackgroundTasks, Depends
+# FastAPI'nin Path'ini farklı bir isimle import et
+from fastapi.params import Path as FastAPIPath
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
+from typing import Dict, Any, List, Optional, Tuple
+from pathlib import Path as PathLib
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
-from ..processors.document_processor import DocumentProcessor
-from ..models.cv_models import CV
-from ..core.platform_config import PlatformConfig
+from src.processors.document_processor import DocumentProcessor
+from src.models.cv_models import CV
+from src.core.platform_config import PlatformConfig
+from src.core.llm_manager import LLMManager
 from pydantic import BaseModel
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
+import logging
+import platform
+import psutil
+from src.processors import document_processor
+
+# Loglama ayarları
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="CV Analiz API",
@@ -31,13 +50,59 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Geçici dosya dizini
-UPLOAD_DIR = Path("temp_uploads")
-UPLOAD_DIR.mkdir(exist_ok=True)
+# Global değişkenler
+UPLOAD_DIR = PathLib("temp")
+OUTPUT_DIR = PathLib("output")
+llm_manager = None
+
+# Statik dosyaları ve şablonları yapılandırma
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 # Belge işlemci ve platform yapılandırması
 document_processor = DocumentProcessor()
 platform_config = PlatformConfig()
+
+@app.on_event("startup")
+async def startup_event():
+    """Uygulama başlangıcında çalıştırılacak işlemler"""
+    # Gerekli dizinleri oluştur
+    os.makedirs("temp", exist_ok=True)
+    os.makedirs("output", exist_ok=True)
+    
+    # Bellek kullanımını ve sistem bilgilerini yazdır
+    logging.info(f"Sistem: {platform.system()} {platform.version()}")
+    
+    mem = psutil.virtual_memory()
+    logging.info(f"Bellek: Toplam: {mem.total / (1024**3):.1f} GB, Kullanılan: {mem.used / (1024**3):.1f} GB ({mem.percent}%)")
+    
+    # LLM modelini arka planda yükle
+    logging.info("LLM modeli arka planda yükleniyor...")
+    asyncio.create_task(load_model_async())
+
+async def load_model_async():
+    """LLM modelini arka planda비동기적으로 yükler"""
+    global llm_manager
+    
+    try:
+        # LLM Manager oluştur
+        from src.core.llm_manager import LLMManager
+        
+        llm_manager = LLMManager()
+        logging.info(f"LLM Manager başlatıldı, model: {llm_manager.model_path}")
+        
+        # Model yükleme işlemini başlat (ThreadPoolExecutor ile bloke etmeden)
+        with ThreadPoolExecutor() as executor:
+            await asyncio.get_event_loop().run_in_executor(
+                executor,
+                lambda: llm_manager.load_model()
+            )
+            
+        logging.info("LLM modeli başarıyla yüklendi ve kullanıma hazır")
+    except Exception as e:
+        logging.error(f"LLM modeli yüklenirken hata oluştu: {str(e)}")
+        # LLM Manager'ı None yaparak yükleme başarısız olduğunu belirt
+        llm_manager = None
 
 class FilterOptions(BaseModel):
     min_experience_years: Optional[int] = None
@@ -87,57 +152,119 @@ class StatisticalAnalysis(BaseModel):
     language_distribution: Dict[str, int]
     average_match_scores: Dict[str, float]
 
-@app.get("/")
+@app.get("/", response_class=FileResponse)
 async def root():
-    """Kök endpoint"""
+    """Web arayüzü için ana sayfa"""
+    return FileResponse("templates/index.html")
+
+@app.get("/api/system-info")
+async def get_system_info():
+    """Sistem bilgilerini döndürür"""
     return {
         "status": "active",
         "system_info": platform_config.get_system_info()
     }
 
-@app.post("/analyze-cv", response_model=CV)
+@app.post("/analyze-cv", response_model=Dict[str, Any])
 async def analyze_cv(
     file: UploadFile = File(...),
+    use_llm: bool = Form(False),  # LLM kullanımını kontrol etmek için parametre ekle
     filter_options: Optional[FilterOptions] = None
-) -> Dict[str, Any]:
+):
     """
     CV dosyasını analiz eder
     
     Args:
         file (UploadFile): Yüklenen CV dosyası
+        use_llm (bool): LLM modelini kullanarak gelişmiş analiz yapılıp yapılmayacağı
         filter_options (FilterOptions, optional): Filtreleme seçenekleri
         
     Returns:
         Dict[str, Any]: Analiz sonuçları
     """
-    file_path = None
     try:
-        # Dosyayı geçici dizine kaydet
-        file_path = UPLOAD_DIR / file.filename
-        with open(file_path, "wb") as buffer:
-            content = await file.read()
-            buffer.write(content)
+        # Dosyayı geçici konuma kaydet
+        file_location = f"temp/{file.filename}"
+        os.makedirs(os.path.dirname(file_location), exist_ok=True)
+        
+        with open(file_location, "wb") as buffer:
+            contents = await file.read()
+            buffer.write(contents)
             
         # Metni çıkar
-        text = document_processor.extract_text(str(file_path))
+        text = document_processor.extract_text(file_location)
         
-        # CV'yi analiz et
-        result = document_processor.analyze_cv(text)
-        
-        # Filtreleme uygula
+        if not text:
+            raise HTTPException(status_code=400, detail="Dosyadan metin çıkarılamadı")
+            
+        # LLM kullanımını kontrol et
+        if use_llm:
+            # LLM ile analiz yap
+            logging.info("LLM ile analiz yapılıyor...")
+            cv_data = await analyze_with_llm(text)
+        else:
+            # Regex tabanlı analiz yap
+            logging.info("Regex tabanlı analiz yapılıyor...")
+            if llm_manager:
+                # Aynı yüksek kaliteli regex fonksiyonunu kullan, ancak LLM çağrısı yapma
+                cv_data = llm_manager._create_default_cv_response(cv_text=text)
+            else:
+                # LLM manager yoksa standart analiz
+                cv_data = document_processor.analyze_cv(text)
+            
+        # Filtre seçeneklerini uygula
         if filter_options:
-            result = _apply_filters(result, filter_options)
-        
-        # Geçici dosyayı sil
-        if file_path and file_path.exists():
-            file_path.unlink()
-        
-        return result
+            cv_data = _apply_filters(cv_data, filter_options)
+            
+        # Geçici dosyayı temizle
+        os.remove(file_location)
+            
+        return cv_data
         
     except Exception as e:
-        if file_path and file_path.exists():
-            file_path.unlink()
-        raise HTTPException(status_code=400, detail=str(e))
+        logging.error(f"CV analiz hatası: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"CV analiz hatası: {str(e)}")
+
+async def analyze_with_llm(text: str) -> Dict[str, Any]:
+    """
+    LLM ile CV analizi yapar
+    
+    Args:
+        text (str): CV metni
+        
+    Returns:
+        Dict[str, Any]: LLM analiz sonuçları
+    """
+    try:
+        # LLM Manager'ın hazır olduğundan emin ol
+        if not llm_manager or not llm_manager.model:
+            logging.warning("LLM modeli hazır değil, model yükleniyor...")
+            await load_model_async()
+            
+            if not llm_manager or not llm_manager.model:
+                raise RuntimeError("LLM modeli yüklenemedi")
+        
+        # LLM ile CV analizi yap
+        logging.info("LLM ile CV analizi yapılıyor...")
+        result = llm_manager.analyze_cv(cv_text=text)
+        
+        # Analiz sonucunu logla (HATA AYIKLAMA İÇİN)
+        logging.info(f"LLM analiz sonucu: {json.dumps(result, ensure_ascii=False)[:500]}...")
+        
+        # Eğer hata varsa işle
+        if "error" in result:
+            logging.error(f"LLM analiz hatası: {result['error']}")
+            raise RuntimeError(f"LLM analiz hatası: {result['error']}")
+            
+        return result
+    except Exception as e:
+        logging.error(f"CV analizi sırasında beklenmeyen hata: {str(e)}")
+        import traceback
+        logging.error(f"Hata ayrıntıları: {traceback.format_exc()}")
+        return {
+            "error": f"CV analizi hatası: {str(e)}",
+            "raw_response": "Yerel modelde işlem sırasında hata oluştu"
+        }
 
 @app.post("/match-cv")
 async def match_cv(
@@ -331,7 +458,7 @@ async def analyze_batch_cvs(
             file_paths.append(file_path)
             
         # Paralel analiz yap
-        async def analyze_single_cv(file_path: Path) -> Dict[str, Any]:
+        async def analyze_single_cv(file_path: PathLib) -> Dict[str, Any]:
             text = document_processor.extract_text(str(file_path))
             result = document_processor.analyze_cv(text)
             if options and options.filter_options:
@@ -553,7 +680,7 @@ def _calculate_similarity(cv1: Dict[str, Any], cv2: Dict[str, Any]) -> float:
 
 def _generate_batch_report(results: List[Dict[str, Any]], stats: StatisticalAnalysis, include_charts: bool):
     """Toplu analiz raporu oluşturur"""
-    report_dir = Path("reports")
+    report_dir = PathLib("reports")
     report_dir.mkdir(exist_ok=True)
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -580,7 +707,7 @@ def _generate_batch_report(results: List[Dict[str, Any]], stats: StatisticalAnal
 
 def _generate_comparison_charts(comparison: Dict[str, Any], export_format: str):
     """Karşılaştırma grafikleri oluşturur"""
-    charts_dir = Path("charts")
+    charts_dir = PathLib("charts")
     charts_dir.mkdir(exist_ok=True)
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -643,7 +770,7 @@ def _generate_detailed_report(cv_data: Dict[str, Any], options: ReportOptions) -
     
     return report
 
-def _create_visualization_charts(stats: StatisticalAnalysis, output_dir: Path):
+def _create_visualization_charts(stats: StatisticalAnalysis, output_dir: PathLib):
     """İstatistiksel görselleştirmeler oluşturur"""
     output_dir.mkdir(exist_ok=True)
     
@@ -674,14 +801,14 @@ def _create_visualization_charts(stats: StatisticalAnalysis, output_dir: Path):
     plt.savefig(output_dir / "language_distribution.png")
     plt.close()
 
-def _generate_pdf_report(content: Dict[str, Any], output_path: Path):
+def _generate_pdf_report(content: Dict[str, Any], output_path: PathLib):
     """PDF raporu oluşturur"""
     # TODO: PDF oluşturma işlemi eklenecek
     pass 
 
 def _generate_report_charts(cv_data: Dict[str, Any], export_format: str):
     """Rapor grafiklerini oluşturur"""
-    charts_dir = Path("charts")
+    charts_dir = PathLib("charts")
     charts_dir.mkdir(exist_ok=True)
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pozisyon Uyum Analizi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #f8f9fa; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container { 
+            max-width: 900px; 
+            margin-top: 2rem;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { 
+            color: #343a40; 
+        }
+        .section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .card {
+            margin-bottom: 1rem;
+            border: none;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        .progress {
+            height: 25px;
+        }
+        .back-btn {
+            margin-top: 2rem;
+        }
+        .badge {
+            font-size: 0.85rem;
+            padding: 0.5em 0.8em;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .strength-item, .weakness-item {
+            margin-bottom: 0.75rem;
+        }
+        .position-form {
+            background-color: #f1f3f5;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .match-indicator {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .match-high {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .match-medium {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .match-low {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">Pozisyon Uyum Analizi</h1>
+        
+        <!-- Pozisyon Bilgisi -->
+        <div class="section">
+            <h3>🎯 Pozisyon: {{ eslesme.pozisyon }}</h3>
+            
+            {% if eslesme.uyumluluk_puani >= 80 %}
+            <div class="match-indicator match-high">
+                Mükemmel Uyum ({{ eslesme.uyumluluk_puani }}/100)
+            </div>
+            {% elif eslesme.uyumluluk_puani >= 60 %}
+            <div class="match-indicator match-medium">
+                İyi Uyum ({{ eslesme.uyumluluk_puani }}/100)
+            </div>
+            {% else %}
+            <div class="match-indicator match-low">
+                Düşük Uyum ({{ eslesme.uyumluluk_puani }}/100)
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Detaylı Puanlama -->
+        <div class="section">
+            <h3>📈 Detaylı Puanlama</h3>
+            <div class="card">
+                <div class="card-body">                    
+                    <p><strong>Eğitim Uyumu:</strong></p>
+                    <div class="progress mb-3">
+                        <div class="progress-bar" role="progressbar" 
+                             style="width: {{ eslesme.detayli_puanlama.egitim_uyumu }}%;" 
+                             aria-valuenow="{{ eslesme.detayli_puanlama.egitim_uyumu }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ eslesme.detayli_puanlama.egitim_uyumu }}%
+                        </div>
+                    </div>
+                    
+                    <p><strong>Deneyim Uyumu:</strong></p>
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ eslesme.detayli_puanlama.deneyim_uyumu }}%;" 
+                             aria-valuenow="{{ eslesme.detayli_puanlama.deneyim_uyumu }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ eslesme.detayli_puanlama.deneyim_uyumu }}%
+                        </div>
+                    </div>
+                    
+                    <p><strong>Beceri Uyumu:</strong></p>
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-info" role="progressbar" 
+                             style="width: {{ eslesme.detayli_puanlama.beceri_uyumu }}%;" 
+                             aria-valuenow="{{ eslesme.detayli_puanlama.beceri_uyumu }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ eslesme.detayli_puanlama.beceri_uyumu }}%
+                        </div>
+                    </div>
+                    
+                    <p><strong>Proje Uyumu:</strong></p>
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-warning" role="progressbar" 
+                             style="width: {{ eslesme.detayli_puanlama.proje_uyumu }}%;" 
+                             aria-valuenow="{{ eslesme.detayli_puanlama.proje_uyumu }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ eslesme.detayli_puanlama.proje_uyumu }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Güçlü Yönler ve Eksik Beceriler -->
+        <div class="section">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>💪 Güçlü Yönler</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                {% for gucu in eslesme.guclu_yonler %}
+                                <li class="strength-item">✅ {{ gucu }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3>⚠️ Eksik Beceriler</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                {% for beceri in eslesme.eksik_beceriler %}
+                                <li class="weakness-item">❌ {{ beceri }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tavsiyeler -->
+        <div class="section">
+            <h3>💡 Tavsiyeler</h3>
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        {% for tavsiye in eslesme.tavsiyeler %}
+                        <li class="mb-2">🔸 {{ tavsiye }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Genel Değerlendirme -->
+        <div class="section">
+            <h3>📝 Genel Değerlendirme</h3>
+            <div class="card">
+                <div class="card-body">
+                    <p>{{ eslesme.genel_degerlendirme }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diğer Pozisyon Analizi -->
+        <div class="position-form section">
+            <h3>Başka Bir Pozisyon İçin Analiz Yap</h3>
+            <form action="/pozisyon_analiz" method="post">
+                <div class="mb-3">
+                    <label for="pozisyon" class="form-label">Pozisyon Bilgisi Girin</label>
+                    <input type="text" class="form-control" id="pozisyon" name="pozisyon" 
+                           placeholder="Örnek: Senior Python Developer" required>
+                </div>
+                <input type="hidden" name="session_id" value="{{ session_id }}">
+                <input type="hidden" name="model" value="{{ model }}">
+                <button type="submit" class="btn btn-primary">Pozisyon Uyumluluğunu Analiz Et</button>
+            </form>
+        </div>
+        
+        <div class="text-center back-btn">
+            <a href="/" class="btn btn-secondary">Ana Sayfaya Dön</a>
+            <a href="/static/pozisyon_sonuc_{{ session_id }}.json" class="btn btn-primary" download>Sonuçları İndir (JSON)</a>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

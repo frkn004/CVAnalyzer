@@ -1,136 +1,117 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 from typing import Optional, Dict, Any, List
 import os
 from pathlib import Path
 import json
 import logging
-from tqdm import tqdm
-import importlib.util
+import time
 import re
+import requests
 
 logger = logging.getLogger(__name__)
 
-# CTransformers kütüphanesinin yüklü olup olmadığını kontrol et
-CTRANSFORMERS_AVAILABLE = importlib.util.find_spec("ctransformers") is not None
-
-if CTRANSFORMERS_AVAILABLE:
-    from ctransformers import AutoModelForCausalLM
-else:
-    logger.warning("ctransformers kütüphanesi bulunamadı. Yalnızca önceden işlenmiş analiz kullanılabilir.")
-    AutoModelForCausalLM = None
-
 class LLMManager:
+    """
+    Ollama API kullanarak LLM yönetimi yapan sınıf.
+    Orijinal LLMManager sınıfı ile aynı arayüze sahip,
+    eski kodunuzu değiştirmeden kullanabilirsiniz.
+    """
+    
     def __init__(self, model_path: Optional[str] = None, model_type: str = None, force_phi: bool = False):
         """
         LLM yönetici sınıfı
         
         Args:
-            model_path (str): Model dosyasının yolu (None ise otomatik seçilir)
-            model_type (str): Model tipi (varsayılan: None, otomatik belirlenecek)
-            force_phi (bool): Phi-2 modelini zorla kullan (varsayılan: False)
+            model_path (str): Model ismi veya dosya yolu (None ise otomatik seçilir)
+            model_type (str): Model tipi - Ollama için kullanılmıyor
+            force_phi (bool): Phi modeli zorlaması - Ollama için kullanılmıyor
         """
-        self.force_phi = force_phi
-        self.model_path = self._select_best_model() if model_path is None else Path(model_path)
+        self.base_url = "http://localhost:11434"
+        self.available_models = []
         
-        # Model tipini belirle - phi modelini öncelikle kullan
-        if model_type is None:
-            model_name = str(self.model_path).lower()
-            
-            # Phi modelini kullanırken doğrudan model_type belirle
-            if "phi" in model_name or self.force_phi:
-                self.model_type = "gptj"  # Phi için "gpt_neox" yerine "gptj" kullanıyoruz
-            elif "llama-3" in model_name or "meta-llama-3" in model_name:
-                self.model_type = "llama"
-            elif "tiny" in model_name or "llama" in model_name:
-                self.model_type = "llama"
-            elif "mistral" in model_name:
-                self.model_type = "mistral"
+        # Ollama API'nin çalışıp çalışmadığını kontrol et
+        try:
+            response = requests.get(f"{self.base_url}/api/tags")
+            if response.status_code == 200:
+                self.available_models = [model.get('name') for model in response.json().get('models', [])]
+                logger.info(f"Ollama API bağlantısı başarılı! Mevcut modeller: {', '.join(self.available_models)}")
             else:
-                # Bilinmeyen model için varsayılan tip
-                self.model_type = "gpt_neox"  # Çoğu model için çalışan genel bir tip
-        else:
-            self.model_type = model_type
-            
-        self.model = None
-        self._ensure_model_directory()
+                logger.error(f"Ollama API yanıt verdi ancak hata kodu döndürdü: {response.status_code}")
+        except Exception as e:
+            logger.error(f"Ollama API'ye bağlanılamadı: {str(e)}")
+            logger.error("Ollama yüklü ve çalışıyor mu? 'ollama serve' komutu çalıştırılmalı.")
         
-        logger.info(f"Model yolu: {self.model_path}, Model tipi: {self.model_type}")
-        
-    def _ensure_model_directory(self):
-        """Model dizininin varlığını kontrol eder ve yoksa oluşturur."""
-        model_dir = os.path.dirname(self.model_path)
-        if not os.path.exists(model_dir):
-            os.makedirs(model_dir)
-        
-    def _select_best_model(self) -> Path:
-        """Sistemdeki en iyi modeli seçer - TinyLlama modelini öncelikli olarak dene"""
-        models_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "models")
-        
-        # Model dosyalarını bul
-        model_files = []
-        for file in os.listdir(models_dir):
-            if file.endswith(".gguf"):
-                model_path = os.path.join(models_dir, file)
-                model_size = os.path.getsize(model_path) / (1024 * 1024)  # MB cinsinden
-                # 0 boyutlu dosyaları atla
-                if model_size > 1:  
-                    model_files.append((model_path, model_size, file))
-        
-        if not model_files:
-            raise ValueError("Hiçbir model dosyası bulunamadı. Lütfen models/ dizinine bir GGUF modeli ekleyin.")
-        
-        # TinyLlama modelini öncelikli olarak tercih et (daha iyi çalışıyor)
-        preferred_models = sorted([m for m in model_files if "tiny" in m[2].lower()],
-                                key=lambda x: x[1], reverse=True)
-                                
-        # TinyLlama yoksa, Phi-2 dene (Phi-2 force_phi=True olduğunda çalışır)
-        if not preferred_models and self.force_phi:
-            preferred_models = sorted([m for m in model_files if "phi-2" in m[2].lower()],
-                                  key=lambda x: x[1], reverse=True)
-        
-        # Yukarıdaki modeller yoksa, Llama 2 dene
-        if not preferred_models:
-            preferred_models = sorted([m for m in model_files if "llama-2" in m[2].lower()],
-                                    key=lambda x: x[1], reverse=True)
-        
-        # Yukarıdaki modeller yoksa mevcut modeller içinde en küçüğü seç
-        if preferred_models:
-            selected_model = preferred_models[0]
-        else:
-            # En küçük ama 0 olmayan modeli seç (1GB'dan küçük olanı tercih et)
-            smaller_models = [m for m in model_files if 0 < m[1] < 1000]  # 1GB'dan küçük
-            if smaller_models:
-                selected_model = sorted(smaller_models, key=lambda x: x[1])[0]
+        # Model yolu veya adı verilmişse, bunu kullan
+        if model_path:
+            # Dosya yolu verilmişse model adını çıkar
+            if os.path.exists(model_path):
+                self.model_name = os.path.basename(model_path).split('.')[0]
             else:
-                # Küçük model yoksa herhangi birini seç
-                selected_model = sorted(model_files, key=lambda x: x[1])[0]
+                # Doğrudan model adı verilmiş olabilir
+                self.model_name = model_path
+        else:
+            # Otomatik model seçimi - öncelik sırası: llama3 > phi > llama > mistral > diğerleri
+            self.model_name = self._select_best_model()
             
-        logger.info(f"Seçilen model: {selected_model[2]} ({selected_model[1]:.1f} MB)")
-        return Path(selected_model[0])
+        logger.info(f"Seçilen model: {self.model_name}")
+        self.model = None  # Model yüklendikten sonra True olarak ayarlanacak
+        
+    def _select_best_model(self) -> str:
+        """En uygun modeli seç"""
+        if not self.available_models:
+            return ""
+            
+        # Model seçim önceliği 
+        for model_pattern in ["llama3:8b", "phi", "llama", "mistral"]:
+            for model in self.available_models:
+                if model_pattern in model.lower():
+                    return model
+        
+        # Hiçbiri bulunamazsa ilk modeli kullan
+        return self.available_models[0]
         
     def load_model(self, context_length: int = 16384, max_new_tokens: int = 4096) -> None:
         """Modeli yükler"""
-        if not CTRANSFORMERS_AVAILABLE:
-            logger.error("ctransformers kütüphanesi bulunamadı. Yüklenemedi.")
-            raise ImportError("ctransformers kütüphanesi bulunamadı. 'pip install ctransformers' ile yükleyin.")
-        
-        if not os.path.exists(self.model_path):
-            raise ValueError(f"Model dosyası bulunamadı: {self.model_path}")
-        
-        try:
-            logger.info(f"Model '{self.model_type}' tipi olarak yükleniyor: {self.model_path}")
-            self.model = AutoModelForCausalLM.from_pretrained(
-                str(self.model_path),
-                model_type=self.model_type,
-                context_length=context_length,
-                max_new_tokens=max_new_tokens,
-                threads=os.cpu_count() or 4
-            )
-            logger.info(f"Model başarıyla yüklendi! Tip: {self.model_type}")
+        if not self.model_name:
+            raise ValueError("Model adı belirtilmedi!")
             
+        if not self.available_models:
+            raise ValueError("Hiçbir model bulunamadı! Ollama çalışıyor mu?")
+            
+        # Modelin mevcut olup olmadığını kontrol et
+        if self.model_name not in self.available_models:
+            closest_match = next((m for m in self.available_models if self.model_name in m), None)
+            
+            if closest_match:
+                logger.warning(f"Tam eşleşen model bulunamadı. Benzer model kullanılıyor: {closest_match}")
+                self.model_name = closest_match
+            else:
+                # Eşleşen model yoksa ilk modeli kullan
+                logger.warning(f"Model '{self.model_name}' bulunamadı! İlk mevcut model kullanılıyor: {self.available_models[0]}")
+                self.model_name = self.available_models[0]
+        
+        # Modeli ön belleğe almak için küçük bir istek gönder
+        try:
+            response = requests.post(
+                f"{self.base_url}/api/generate",
+                json={
+                    'model': self.model_name,
+                    'prompt': 'Merhaba',
+                    'stream': False
+                }
+            )
+            
+            if response.status_code == 200:
+                self.model = True  # Model başarıyla yüklendi
+                logger.info(f"Model başarıyla yüklendi: {self.model_name}")
+            else:
+                logger.error(f"Model yüklenemedi: {response.status_code} - {response.text}")
+                raise RuntimeError(f"Model yüklenemedi: {response.text}")
+                
         except Exception as e:
-            error_msg = f"Model yüklenirken hata: {str(e)}"
-            logger.error(error_msg)
-            raise RuntimeError(error_msg)
+            logger.error(f"Model yükleme hatası: {str(e)}")
+            raise RuntimeError(f"Model yükleme hatası: {str(e)}")
         
     def generate(self, prompt: str, temperature: float = 0.1, top_p: float = 0.95, 
                 top_k: int = 40, repetition_penalty: float = 1.1, 
@@ -149,40 +130,65 @@ class LLMManager:
         Returns:
             str: Üretilen metin
         """
-        if self.model is None:
+        if not self.model:
             raise RuntimeError("Model yüklenmemiş. Önce load_model() çağrılmalı.")
             
         logger.info(f"Metin üretme başlatılıyor (temp={temperature}, tokens={max_new_tokens})")
+        
         try:
-            # Önce prompt uzunluğunu kontrol et
+            # Prompt uzunluğunu kontrol et
             if len(prompt) > 16000:
                 logger.warning(f"Prompt çok uzun ({len(prompt)} karakter), kısaltılıyor...")
                 prompt = prompt[:16000]  # Maksimum 16000 karakter ile sınırla
             
-            response = self.model(
-                prompt,
-                temperature=temperature,
-                top_p=top_p,
-                top_k=top_k,
-                repetition_penalty=repetition_penalty,
-                max_new_tokens=max_new_tokens
+            start_time = time.time()
+            
+            # Ollama API parametreleri
+            params = {
+                'model': self.model_name,
+                'prompt': prompt,
+                'stream': False,
+                'temperature': temperature,
+                'num_predict': max_new_tokens,
+                'top_p': top_p,
+                'top_k': top_k,
+                'repeat_penalty': repetition_penalty
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/generate", 
+                json=params,
+                timeout=180  # 3 dakika timeout
             )
             
+            if response.status_code != 200:
+                logger.error(f"API hatası: {response.status_code} - {response.text}")
+                return f"Metin üretme hatası: API yanıt hatası: {response.status_code}"
+            
+            result = response.json().get('response', '')
+            
+            elapsed_time = time.time() - start_time
+            logger.info(f"Metin üretildi! Uzunluk: {len(result)}, Süre: {elapsed_time:.1f}s")
+            
             # Boş yanıt kontrolü
-            if not response or len(response) < 10:
+            if not result or len(result) < 10:
                 logger.warning("Model boş veya çok kısa yanıt döndü, tekrar deneniyor...")
                 # Daha yüksek temperature ile tekrar dene
-                response = self.model(
-                    prompt,
-                    temperature=0.8,  # Daha yüksek yaratıcılık
-                    top_p=0.95,
-                    top_k=60,
-                    repetition_penalty=1.0,  # Tekrar cezası yok
-                    max_new_tokens=max_new_tokens
+                params['temperature'] = 0.8  # Daha yüksek yaratıcılık
+                params['top_k'] = 60
+                params['repeat_penalty'] = 1.0  # Tekrar cezası yok
+                
+                response = requests.post(
+                    f"{self.base_url}/api/generate", 
+                    json=params,
+                    timeout=180
                 )
+                
+                result = response.json().get('response', '')
+                logger.info(f"İkinci deneme sonucu: {len(result)} karakter")
             
-            logger.info(f"Metin üretildi, uzunluk: {len(response)}")
-            return response
+            return result
+            
         except Exception as e:
             logger.error(f"Metin üretme hatası: {str(e)}")
             return f"Metin üretme hatası: {str(e)}"
@@ -197,75 +203,92 @@ class LLMManager:
         Returns:
             Dict[str, Any]: Analiz sonuçları (Bilgiler, eğitim, deneyim, vb.)
         """
-        if self.model is None:
+        if not self.model:
             logger.error("Model yüklenmemiş. Önce load_model() çağrılmalı.")
             return {"error": "Model yüklenemedi", "raw_response": "Lütfen tekrar deneyin."}
             
-        # Daha basit ve daha kısa bir prompt, daha uzun CV metni
+        # Daha temiz ve daha kısa bir prompt
         prompt = f"""
-Lütfen bu CV metnini analiz et:
-
-{cv_text[:7000]}
-
-Yanıtını aşağıdaki JSON formatında ver:
-
-{{
-  "kisisel_bilgiler": {{
-    "isim": "İsim",
-    "email": "Email",
-    "telefon": "Telefon"
-  }},
-  "egitim": [
-    {{
-      "okul": "Okul",
-      "bolum": "Bölüm",
-      "tarih": "Tarih"
-    }}
-  ],
-  "beceriler": ["Beceri1", "Beceri2"],
-  "is_deneyimi": [
-    {{
-      "sirket": "Şirket",
-      "pozisyon": "Pozisyon",
-      "tarih": "Tarih"
-    }}
-  ]
-}}
-
-ÖNEMLİ: Sadece JSON formatında yanıt ver, başka hiçbir şey yazma.
-"""
+        <KONU>CV ANALİZİ</KONU>
+        
+        <CV>
+        {cv_text[:7000]}
+        </CV>
+        
+        <GÖREV>
+        Yukarıdaki CV'yi analiz edip aşağıdaki JSON formatında bilgileri çıkar.
+        Sadece JSON döndür, başka açıklama yapma.
+        </GÖREV>
+        
+        ```json
+        {{
+          "kisisel_bilgiler": {{
+            "isim": "İsim",
+            "email": "Email",
+            "telefon": "Telefon"
+          }},
+          "egitim": [
+            {{
+              "okul": "Okul",
+              "bolum": "Bölüm",
+              "tarih": "Tarih"
+            }}
+          ],
+          "beceriler": ["Beceri1", "Beceri2"],
+          "is_deneyimi": [
+            {{
+              "sirket": "Şirket",
+              "pozisyon": "Pozisyon",
+              "tarih": "Tarih"
+            }}
+          ]
+        }}
+        ```
+        """
         
         try:
             logger.info(f"CV metni uzunluğu: {len(cv_text)}, analiz başlıyor...")
             
             try:
-                # Response üretme denemesi - daha yüksek token limiti ve sıcaklık
-                response = self.generate(
-                    prompt, 
-                    temperature=0.4,     # Daha yüksek sıcaklık
-                    max_new_tokens=4096, # Çok daha fazla token
-                    top_p=0.9,          # Daha çeşitli çıktı
-                    repetition_penalty=1.03  # Çok az ceza
-                )
-                logger.info(f"Model yanıtı alındı, yanıt uzunluğu: {len(response)}")
+                # Ollama API parametreleri - daha yüksek sıcaklık kullan
+                params = {
+                    'model': self.model_name,
+                    'prompt': prompt,
+                    'stream': False,
+                    'temperature': 0.3,
+                    'num_predict': 4000
+                }
                 
-                # Log the first 500 characters of the response for debugging
-                logger.info(f"Yanıt başlangıcı: {response[:min(500, len(response))]}...")
+                response = requests.post(
+                    f"{self.base_url}/api/generate", 
+                    json=params,
+                    timeout=180  # 3 dakika timeout
+                )
+                
+                if response.status_code != 200:
+                    logger.error(f"API hatası: {response.status_code} - {response.text}")
+                    return self._create_default_cv_response(cv_text=cv_text, error_msg=f"API hatası: {response.status_code}")
+                
+                response_text = response.json().get('response', '')
+                logger.info(f"Model yanıtı alındı, yanıt uzunluğu: {len(response_text)}")
                 
                 # Yanıt boş veya çok kısa ise varsayılan yanıta dön
-                if len(response) < 50:  # 50 karakterden kısa ise anlamsız yanıt kabul et
-                    logger.warning(f"Model çok kısa yanıt döndü ({len(response)} karakter), varsayılan işleme moduna geçiliyor")
-                    return self._create_default_cv_response(cv_text=cv_text, error_msg="Model yanıtı çok kısa", raw_response=response)
+                if len(response_text) < 50:  # 50 karakterden kısa ise anlamsız yanıt kabul et
+                    logger.warning(f"Model çok kısa yanıt döndü ({len(response_text)} karakter), varsayılan işleme moduna geçiliyor")
+                    return self._create_default_cv_response(cv_text=cv_text, error_msg="Model yanıtı çok kısa", raw_response=response_text)
                 
             except Exception as gen_err:
                 logger.error(f"Model yanıt üretemedi: {str(gen_err)}")
                 return self._create_default_cv_response(error_msg=f"Model yanıt üretemedi: {str(gen_err)}")
-                
-            # Tüm metinden sadece JSON kısmını çıkarma
+            
+            # JSON çıkarma işlemi
             json_content = None
             
             # XML/HTML benzeri etiketleri çıkar
-            clean_response = re.sub(r'<[^>]+>', '', response)
+            clean_response = re.sub(r'<[^>]+>', '', response_text)
+            
+            # JSON bloğunu temizle
+            clean_response = clean_response.replace('```json', '').replace('```', '')
             
             # JSON bracket algılama
             json_start = clean_response.find('{')
@@ -276,76 +299,37 @@ Yanıtını aşağıdaki JSON formatında ver:
                 logger.info(f"JSON içeriği bulundu, uzunluk: {len(json_content)}")
             else:
                 logger.warning(f"JSON formatı bulunamadı! Yanıt: {clean_response[:200]}")
-                # CV'den temel bilgileri çıkararak varsayılan yanıt oluştur
-                return self._create_default_cv_response(cv_text=cv_text, error_msg="JSON formatı bulunamadı", raw_response=response[:500])
-                
+                return self._create_default_cv_response(cv_text=cv_text, error_msg="JSON formatı bulunamadı", raw_response=response_text[:500])
+            
             try:
-                # JSON stringini düzeltmeye çalış
+                # JSON düzeltme denemeleri
                 json_str = json_content.strip()
                 
-                # Model çıktısında en yaygın görülen sorunları temizle
-                # 1. Tırnak işaretleri
-                json_str = re.sub(r'(?<!\\)"', '"', json_str)  # Yanlış tırnak işaretlerini düzelt
-                json_str = json_str.replace("'", '"')  # Tek tırnak yerine çift tırnak kullan
+                # Model çıktısında sorun olabilecek yerleri düzelt
+                json_str = json_str.replace("'", '"')  # Tek tırnak yerine çift tırnak
+                json_str = json_str.replace(",}", "}")  # Gereksiz virgül
+                json_str = json_str.replace(",]", "]")  # Gereksiz virgül
                 
-                # 2. Fazladan yazı veya açıklamaları temizle
-                json_str = re.sub(r'```json\s*', '', json_str)  # Markdown json başlangıcını temizle
-                json_str = re.sub(r'\s*```', '', json_str)      # Markdown kapanışını temizle
-                
-                # 3. Virgül sorunlarını düzelt
-                json_str = json_str.replace(",\n}", "\n}")
-                json_str = json_str.replace(",\n]", "\n]")
-                json_str = json_str.replace(",}", "}")
-                json_str = json_str.replace(",]", "]")
-                
-                # 4. JSON yapısını doğru olduğundan emin ol
-                if not json_str.startswith('{'): json_str = '{' + json_str.split('{', 1)[1] if '{' in json_str else '{}'
-                if not json_str.endswith('}'): json_str = json_str.rsplit('}', 1)[0] + '}' if '}' in json_str else '{}'
-                
-                # 5. Boş, null ve undefined değerleri temizle
-                json_str = re.sub(r':\s*null', ': ""', json_str)  
+                # Boş değerleri temizle
+                json_str = re.sub(r':\s*null', ': ""', json_str)
                 json_str = re.sub(r':\s*undefined', ': ""', json_str)
-                json_str = re.sub(r':\s*"null"', ': ""', json_str)
-                json_str = re.sub(r':\s*"undefined"', ': ""', json_str)
-                
-                # Fazladan veriyi temizle - line 23 column 1 (char 483) hatasını çözmek için
-                # İlk açılan { ile son kapanan } arasındaki kısmı al
-                first_brace = json_str.find('{')
-                last_brace = json_str.rfind('}')
-                if first_brace != -1 and last_brace != -1 and last_brace > first_brace:
-                    json_str = json_str[first_brace:last_brace+1]
                 
                 # JSON ayrıştır
                 try:
-                    # Önce geçerli JSON mu diye kontrol et
-                    try:
-                        result = json.loads(json_str)
-                        logger.info(f"JSON başarıyla ayrıştırıldı, alanlar: {', '.join(result.keys())}")
-                        return result
-                    except json.JSONDecodeError as e:
-                        logger.error(f"İlk JSON ayrıştırma denemesi başarısız: {e}")
-                        
-                        # En son çare - eğer JSON düzeltme başarısız olursa basit şablon oluştur
-                        if "kisisel_bilgiler" not in json_str or len(json_str) < 50:
-                            logger.warning("JSON içeriği oluşturulamadı, varsayılan işlemeye geçiliyor")
-                            return self._create_default_cv_response(cv_text=cv_text, error_msg=f"JSON formatı oluşturulamadı: {str(e)}")
-                        
-                        # JSON düzeltmeyi tekrar dene - json_repair kütüphanesi yoksa basit düzeltme yap
-                        try:
-                            # Çift tırnak sorunu olmadığından emin ol 
-                            clean_json = json_str.replace('"', '"').replace('"', '"')
-                            result = json.loads(clean_json)
-                            logger.info("JSON temizleme sonrası başarıyla ayrıştırıldı")
-                            return result
-                        except:
-                            logger.error("JSON temizleme sonrası da ayrıştırılamadı")
-                            return self._create_default_cv_response(cv_text=cv_text, error_msg=f"JSON ayrıştırma hatası: {str(e)}", raw_response=response[:300])
-                except Exception as e:
-                    logger.error(f"JSON düzeltme hatası: {str(e)}")
-                    return self._create_default_cv_response(cv_text=cv_text, error_msg=f"JSON düzeltme hatası: {str(e)}", raw_response=response[:300])
+                    result = json.loads(json_str)
+                    logger.info(f"JSON başarıyla ayrıştırıldı, alanlar: {', '.join(result.keys())}")
+                    return result
+                    
+                except json.JSONDecodeError as e:
+                    logger.error(f"JSON ayrıştırma denemesi başarısız: {e}")
+                    
+                    # En son çare - regex tabanlı işleme
+                    return self._create_default_cv_response(cv_text=cv_text, error_msg=f"JSON formatı oluşturulamadı: {str(e)}")
+                    
             except Exception as e:
                 logger.error(f"JSON düzeltme hatası: {str(e)}")
-                return self._create_default_cv_response(cv_text=cv_text, error_msg=f"JSON düzeltme hatası: {str(e)}", raw_response=response[:300])
+                return self._create_default_cv_response(cv_text=cv_text, error_msg=f"JSON düzeltme hatası: {str(e)}", raw_response=response_text[:300])
+                
         except Exception as e:
             logger.error(f"CV analizi sırasında beklenmeyen hata: {str(e)}")
             import traceback
@@ -780,101 +764,54 @@ Yanıtını aşağıdaki JSON formatında ver:
                 "egitim": [{"okul": "N/A", "bolum": "N/A", "tarih": "N/A"}],
                 "error": error_msg
             }
-        
-    def match_cv_with_position(self, cv_data: Dict[str, Any], position_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        CV'yi iş pozisyonuyla eşleştirir
-        
-        Args:
-            cv_data (Dict[str, Any]): CV verisi
-            position_data (Dict[str, Any]): İş pozisyonu verisi
+
+
+if __name__ == "__main__":
+    # Test kodu
+    logging.basicConfig(level=logging.INFO)
+    print("Ollama entegrasyonlu LLMManager testi başlıyor...")
+    
+    # Ollama API'sini kontrol et
+    try:
+        response = requests.get("http://localhost:11434/api/tags")
+        if response.status_code == 200:
+            print("✅ Ollama API bağlantısı başarılı!")
+            models = [model.get('name') for model in response.json().get('models', [])]
+            print(f"Mevcut modeller: {', '.join(models)}")
             
-        Returns:
-            Dict[str, Any]: Eşleştirme sonuçları
-        """
-        if self.model is None:
-            raise RuntimeError("Model yüklenmemiş. Önce load_model() çağrılmalı.")
+            # LLMManager'ı başlat
+            manager = LLMManager()
             
-        # Prompt oluştur
-        prompt = self._create_matching_prompt(cv_data, position_data)
-        
-        # Model yanıtını al
-        response = self.generate(prompt, max_new_tokens=1000)
-        
-        # Yanıtı işle
-        return self._parse_matching_response(response)
-        
-    def _create_matching_prompt(self, cv_data: Dict[str, Any], position_data: Dict[str, Any]) -> str:
-        """Eşleştirme promptu oluşturur"""
-        cv_json = json.dumps(cv_data, indent=2, ensure_ascii=False)
-        position_json = json.dumps(position_data, indent=2, ensure_ascii=False)
-        
-        return f"""
-        # Görev: CV-Pozisyon Eşleştirme
-        
-        Aşağıdaki CV verisini ve iş pozisyonu verisini karşılaştır ve eşleşme skorunu belirle.
-        
-        ## CV Verisi:
-        ```json
-        {cv_json}
-        ```
-        
-        ## Pozisyon Verisi:
-        ```json
-        {position_json}
-        ```
-        
-        Aşağıdaki kriterlere göre değerlendirme yap:
-        - Beceri eşleşmesi
-        - Deneyim süresi ve türü
-        - Eğitim seviyesi ve alanı
-        - Dil becerileri
-        - Sertifikalar
-        
-        0 ile 1 arasında bir eşleşme skoru belirle ve gerekçelerini açıkla.
-        
-        JSON formatında yanıt ver:
-        ```json
-        {
-          "match_score": 0.85,
-          "category_scores": {
-            "skills": 0.9,
-            "experience": 0.8,
-            "education": 0.85,
-            "languages": 0.7,
-            "certifications": 0.75
-          },
-          "strengths": ["Beceri 1", "Beceri 2"],
-          "weaknesses": ["Zayıf alan 1", "Zayıf alan 2"],
-          "recommendations": ["Öneri 1", "Öneri 2"]
-        }
-        ```
-        """
-        
-    def _parse_matching_response(self, response: str) -> Dict[str, Any]:
-        """Eşleştirme yanıtını ayrıştırır"""
-        try:
-            # JSON yanıtını ayıkla
-            json_start = response.find('{')
-            json_end = response.rfind('}') + 1
+            # Modeli yükle
+            manager.load_model()
             
-            if json_start != -1 and json_end != -1:
-                json_str = response[json_start:json_end]
-                try:
-                    return json.loads(json_str)
-                except json.JSONDecodeError:
-                    # Tek tırnaklı değerleri çift tırnaklı yap
-                    corrected_json = json_str.replace("'", '"')
-                    # Virgül düzeltmeleri
-                    corrected_json = corrected_json.replace(",\n}", "\n}")
-                    corrected_json = corrected_json.replace(",\n]", "\n]")
-                    return json.loads(corrected_json)
+            # Test dosyası yolunu al
+            import sys
+            if len(sys.argv) > 1:
+                test_file = sys.argv[1]
+            else:
+                test_file = input("Test edilecek CV dosyasının yolunu girin (varsayılan: cv_ornek.txt): ") or "cv_ornek.txt"
+            
+            # Dosyayı oku
+            try:
+                with open(test_file, 'r', encoding='utf-8') as f:
+                    cv_text = f.read()
                     
-            return {"error": "JSON yanıtı bulunamadı", "raw_response": response}
-        except Exception as e:
-            return {"error": str(e), "raw_response": response}
-        
-    def __del__(self):
-        """Kaynakları temizler"""
-        if self.model is not None:
-            del self.model 
+                print(f"CV dosyası okundu: {len(cv_text)} karakter")
+                
+                # CV analizi yap
+                print("CV analizi yapılıyor...")
+                result = manager.analyze_cv(cv_text)
+                
+                # Analiz sonucunu göster
+                print("\n=== CV ANALİZ SONUÇLARI ===")
+                print(json.dumps(result, indent=2, ensure_ascii=False))
+                
+            except Exception as e:
+                print(f"❌ Dosya okuma hatası: {str(e)}")
+            
+        else:
+            print(f"❌ Ollama API yanıt verdi ancak hata kodu döndürdü: {response.status_code}")
+    except Exception as e:
+        print(f"❌ Ollama API'ye bağlanılamadı: {str(e)}")
+        print("Ollama yüklü ve çalışıyor mu? 'ollama serve' komutunu çalıştırın.") 

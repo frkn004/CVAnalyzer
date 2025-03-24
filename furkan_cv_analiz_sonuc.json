@@ -1,0 +1,104 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "",
+    "email": "sevinc.furkan04@gmail.com",
+    "telefon": "0531 835 41 11",
+    "lokasyon": "Ankara",
+    "linkedin": "LinkedIn Link",
+    "website": ""
+  },
+  "egitim": [
+    {
+      "okul": "OSTİM Technical University",
+      "bolum": "",
+      "mezuniyet": "Jun 2028",
+      "detaylar": ""
+    }
+  ],
+  "deneyim": [
+    {
+      "sirket": "Maren Robotics",
+      "pozisyon": "AI Engineer",
+      "tarih": "Sep 2024 - Present",
+      "sorumluluklar": [
+        "Developed a vision-based detection system",
+        "Currently developing a product to detect drowning and fall incidents"
+      ]
+    },
+    {
+      "sirket": "AIVA Tech",
+      "pozisyon": "AI Technical and Software Engineer",
+      "tarih": "Aug 2024 - Present",
+      "sorumluluklar": [
+        "Developed an AI-powered HR Assistant",
+        "Created an AI-powered meeting automation system"
+      ]
+    },
+    {
+      "sirket": "Limak Cement",
+      "pozisyon": "AI Intern",
+      "tarih": "Feb 2024 - Jul 2025",
+      "sorumluluklar": [
+        "Cleaned and transformed over 102 million data entries",
+        "Developed a product to detect drowning and fall incidents"
+      ]
+    }
+  ],
+  "beceriler": {
+    "teknik_beceriler": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML & CSS"
+    ],
+    "yazilim_dilleri": [
+      ""
+    ],
+    "diller": [
+      "English B1"
+    ],
+    "soft_beceriler": [
+      ""
+    ]
+  },
+  "projeler": [
+    {
+      "proje_adi": "AI-powered HR Assistant",
+      "aciklama": "",
+      "kullanilan_teknolojiler": [
+        ""
+      ]
+    },
+    {
+      "proje_adi": "AI-powered meeting automation system",
+      "aciklama": "",
+      "kullanilan_teknolojiler": [
+        ""
+      ]
+    }
+  ],
+  "anahtar_kelimeler": [
+    ""
+  ],
+  "guclu_yonler": [
+    ""
+  ],
+  "gelistirilmesi_gereken_yonler": [
+    ""
+  ],
+  "uygun_pozisyonlar": [
+    ""
+  ],
+  "kalite_analizi": {
+    "genel_skor": 0,
+    "eksikler": [
+      ""
+    ],
+    "oneriler": [
+      ""
+    ]
+  },
+  "analiz_tarihi": "24-03-2025 12:00"
+}

@@ -1,0 +1,37 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "CV'den isim çıkarılamadı",
+    "email": "Belirtilmemiş",
+    "telefon": "Belirtilmemiş",
+    "lokasyon": "Belirtilmemiş",
+    "linkedin": "Belirtilmemiş"
+  },
+  "egitim_bilgileri": [],
+  "is_deneyimi": [],
+  "projeler": [],
+  "beceriler": {
+    "teknik_beceriler": [],
+    "yazilim_dilleri": [],
+    "diller": [],
+    "soft_beceriler": []
+  },
+  "cv_puanlama": {
+    "toplam_puan": 50,
+    "egitim_puani": 50,
+    "deneyim_puani": 50,
+    "beceri_puani": 50,
+    "proje_puani": 50
+  },
+  "guclu_yonler": [
+    "Bilgi yetersiz"
+  ],
+  "gelistirilmesi_gereken_yonler": [
+    "Bilgi yetersiz"
+  ],
+  "uygun_pozisyonlar": [
+    "Belirtilmemiş"
+  ],
+  "yetenek_ozeti": "CV analizi sırasında hata oluştu, yetenek özeti çıkarılamadı.",
+  "_error": "Hata: 'GelismisCVAnaliz' object has no attribute '_extract_json'",
+  "_raw_text": ""
+}

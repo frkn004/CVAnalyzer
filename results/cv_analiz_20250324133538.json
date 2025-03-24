@@ -1,0 +1,87 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Furkan Sevinç",
+    "email": "sevinc.furkan04@gmail.com",
+    "telefon": "0531 835 41 11",
+    "lokasyon": "Ankara"
+  },
+  "egitim_bilgileri": [
+    {
+      "okul": "OSTİM Technical University",
+      "bolum": "",
+      "mezuniyet_tarihi": "Jun 2028"
+    }
+  ],
+  "is_deneyimi": [
+    {
+      "sirket": "Maren Robotics",
+      "pozisyon": "Part-Time AI Engineer",
+      "tarih": "Sep 2024 - Present",
+      "sorumluluklar": [
+        "Developed a vision-based detection system",
+        "Currently developing a product to detect drowning and fall incidents",
+        "Designed and implemented AI models"
+      ]
+    },
+    {
+      "sirket": "AIVA Tech",
+      "pozisyon": "",
+      "tarih": "",
+      "sorumluluklar": [
+        "Developed an AI-powered interview automation platform",
+        "Developed an AI-Powered Surface Rescue System for Fasty Life-Sa"
+      ]
+    }
+  ],
+  "projeler": [
+    {
+      "name": "AI Interview Automation Platform",
+      "description": "AIVA Tech Link: https://mulakat.aivatech.io/login I developed an AI-powered interview automation system that streamlines the hiring process by automating CV analysis, interview question generation, and real-time sentiment analysis.",
+      "benefits": [
+        "Saves time",
+        "Enhances objectivity in hiring decisions",
+        "Provides valuable insights into candidate suitability"
+      ]
+    },
+    {
+      "name": "AI-Powered Surface Rescue System for Fasty Life-Sa",
+      "description": "I developed an AI-powered surface rescue system for Fasty, an autonomous rescue drone, using computer vision algorithms to detect and track humans and objects on the water's surface. The system sends real-time notifications for immediate response, ensuring faster emergency interventions.",
+      "benefits": [
+        "Improves aquatic safety by identifying potential dangers",
+        "Enables quick intervention"
+      ]
+    },
+    {
+      "name": "AIVA Meeting Speech Recognition System",
+      "description": "This system is designed to capture and analyze spoken content during meetings in real-time. It converts spoken language into text using advanced speech recognition technology and then applies natural language processing (NLP) to identify key topics and individuals mentioned during the discussion.",
+      "benefits": [
+        "Enhances meeting productivity by ensuring that critical points and decisions are captured accurately and promptly"
+      ]
+    }
+  ],
+  "liderlik_bilgileri": [
+    {
+      "sirket": "PandoraAI",
+      "pozisyon": "Financial Relations Coordinator",
+      "tarih": "Feb 2024 - Present"
+    },
+    {
+      "sirket": "Artificial Intelligence and Technology Association",
+      "pozisyon": "Co-Chair",
+      "tarih": "Jul 2024 - Present"
+    }
+  ],
+  "skilller": [
+    "Microsoft Office (Excel, Word, PowerPoint)",
+    "Python",
+    "C/C++",
+    "JavaScript",
+    "MySQL",
+    "HTML & CSS",
+    "SQL"
+  ],
+  "diller": [
+    "English B1"
+  ],
+  "analiz_tarihi": "24.03.2025 13:35"
+}

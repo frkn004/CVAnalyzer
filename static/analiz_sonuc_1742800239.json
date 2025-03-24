@@ -1,0 +1,103 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Belirtilmemiş",
+    "email": "sevinc.furkan04@gmail.com",
+    "telefon": "533 167 3044",
+    "lokasyon": "solutions, focusing",
+    "linkedin": "Belirtilmemiş"
+  },
+  "cv_puanlama": {
+    "toplam_puan": 59,
+    "egitim_puani": 25,
+    "deneyim_puani": 45,
+    "beceri_puani": 90,
+    "proje_puani": 100
+  },
+  "beceriler": {
+    "teknik_beceriler": [],
+    "yazilim_dilleri": [
+      "Python",
+      "C",
+      "JavaScript",
+      "SQL",
+      "HTML",
+      "CSS"
+    ],
+    "diller": [
+      "English (B1)"
+    ],
+    "soft_beceriler": [
+      "Communication",
+      "Leadership"
+    ]
+  },
+  "egitim_bilgileri": [
+    {
+      "okul": "University Ankara Graduation Date: Jun 2028 WORK EXPERIENCE Maren Robotics Ankara Part-T ime AI Engineer - Sep 2024 Present Developed a vision-based detection system using computer vision algorithms to identify and track humans and objects on water",
+      "bolum": "Belirtilmemiş",
+      "derece": "mail",
+      "tarih": "Belirtilmemiş"
+    }
+  ],
+  "is_deneyimi": [
+    {
+      "sirket": "inc.furkan04@gmail",
+      "pozisyon": "roles",
+      "tarih": "Belirtilmemiş",
+      "sorumluluklar": [
+        "Designed and implemented AI models integrated with embedded systems for real-time data pr ocessing and decision-making in aquatic envir onments .",
+        "Applied advanced algorithms for object r ecognition , classification , and tracking in dynamic water settings , improving emergency r esponse system efficiency and reliability .",
+        "Developed an AI-based surface r escue system for autonomous aquatic r escue devices .",
+        "AIVA Tech Istanbul AI Technical and Softwar e Engineer - Aug 2024 Present Developed an AI-power ed HR Assistant , automating CV analysis , interview question generation , and real-time interview simulations to improve recruitment ef ficiency .",
+        "Created an AI-power ed meeting automation system that transcribes meeting audio and converts it into actionable tasks for improved productivity ."
+      ]
+    }
+  ],
+  "projeler": [
+    {
+      "proje_adi": "system using computer vision algorithms to identify and track humans and objects on water",
+      "aciklama": "Furkan Sevinç Ankara | 0531 835 41 1 1 | sevinc.furkan04@gmail.com | LinkedIn Link | GitHub Link | My StartUp EDUCA TION OSTİM Technical University Ankara Graduation Date: Jun 2028 WORK EXPERIENCE Mar",
+      "kullanilan_teknolojiler": [
+        "that improved accuracy from 64% to 96% . Applied advanced algorithms to optimize data pr ocessing and increase prediction accuracy . OSTİMT ech Technology Transfer Office Ankara Intern - Feb 2024 Jun 2025 Gained insights into Technology Transfer Office (TT O) operations and contributed to process management . Gained experience in academic and industrial collaborations . PROJECT EXPERIENCE AIVA Tech Istanbul AI Interview Automation Platform - AIVA Tech Link: https://mulakat.aivatech.io/login I developed an AI-powered interview automation system that streamlines the hiring process by automating CV analysis",
+        "interview question generation",
+        "and real-time sentiment analysis. CV Analysis: The system analyzes candidate CVs to assess qualifications and suitability for specific roles. Dynamic Question Generation: It generates personalized interview questions based on the candidate's background and the job's requirements",
+        "ensuring a tailored interview experience. Real-T ime Sentiment Analysis: While candidates respond",
+        "the system performs sentiment analysis on their answers",
+        "providing insights into their emotional tone and communication style. Post-Interview Reporting: After the interview",
+        "the system generates a comprehensive performance report and sends it to the HR platform via webhook for further evaluation. Benefits: This system saves time",
+        "enhances objectivity in hiring decisions",
+        "and provides valuable insights into candidate suitability beyond just qualifications. Maren Robotics Ankara AI-Powered Surface Rescue System for Fasty Life-Sa I developed an AI-powered surface rescue system for Fasty",
+        "an autonomous rescue drone",
+        "using computer vision algorithms to detect and track humans and objects on the water's surface. The system sends real-time notifications for immediate response",
+        "ensuring faster emer gency interventions. Additionally",
+        "the system identifies potential dangers",
+        "such as drowning incidents",
+        "by detecting abnormal movements and providing actionable alerts for intervention. Object Detection: The system uses advanced computer vision algorithms to identify and track humans and objects on the water's surface. Real-T ime Notifications: Once a human or object is detected",
+        "the system immediately sends notifications to the relevant emer gency response teams. AI Integration: I integrated AI models into the drone's embedded system",
+        "enabling real-time decision-making and action. Enhanced Safety: The system improves aquatic safety by identifying potential dangers and enabling quick intervention. LEADERSHIP EXPERIENCE PandoraAI Ankara Financial Relations Coordinator - Feb 2024 Present Managing the club's finances and finding new sponsorships. Artificial Intelligence and Technology Association Istanbul Co-Chair - Jul 2024 Present I serve as the Co-Chair of the Artificial Intelligence and Technology Association",
+        "an or ganization dedicated to bringing AI clubs together across Turkey . We currently have 6",
+        "000 members. SKILLS & INTERESTS : Skills Microsoft Of fice (Excel",
+        "Word",
+        "PowerPoint)",
+        "Python",
+        "C/C++",
+        "JavaScript",
+        "MySQL",
+        "HTML & CSS",
+        "SQL : Languages English B1 REFERENCES Emre Ege / Maren Robotics / 0533 167 3044 / emre.ege@marenrobotics.com Suleyman Kaplan / AIVA Tech / 0531 826 16 42 / suleyman@aivatech.io Bahattin Gökhan Topal / OSTİMT ech Technology Transfer Of fice / 0532 742 02 85 / gökhan.topal@ostimteknik.edu.tr"
+      ]
+    }
+  ],
+  "guclu_yonler": [
+    "Eğitim odaklı",
+    "Teknik yetkinlikler",
+    "Kişilerarası iletişim becerileri"
+  ],
+  "gelistirilmesi_gereken_yonler": [],
+  "uygun_pozisyonlar": [
+    "Kıdemli Roles",
+    "Yazılım Geliştirici",
+    "Web Geliştirici"
+  ],
+  "yetenek_ozeti": "roles alanlarında çalışmıştır. Teknik yetkinlikleri arasında Python, C, JavaScript bulunmaktadır. Yabancı dil olarak English (B1) bilmektedir. Güçlü yönleri arasında Eğitim odaklı ve Teknik yetkinlikler bulunmaktadır."
+}

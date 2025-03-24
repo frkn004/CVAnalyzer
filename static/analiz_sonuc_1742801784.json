@@ -1,0 +1,125 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Furkan Sevinç",
+    "email": "sevinc.furkan04@gmail.com",
+    "telefon": "5331673044",
+    "lokasyon": "Ankara",
+    "linkedin": "Link",
+    "website": "sevinc.furkan"
+  },
+  "cv_puanlama": {
+    "toplam_puan": 55,
+    "egitim_puani": 25,
+    "deneyim_puani": 25,
+    "beceri_puani": 100,
+    "proje_puani": 100
+  },
+  "beceriler": {
+    "teknik_beceriler": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Computer Vision",
+      "Nlp",
+      "Object Detection",
+      "Classification",
+      "Algorithm",
+      "Sentiment Analysis",
+      "Automation"
+    ],
+    "yazilim_dilleri": [
+      "Python",
+      "Javascript",
+      "Sql",
+      "Html",
+      "Css"
+    ],
+    "diller": [
+      "English (B1)"
+    ],
+    "soft_beceriler": []
+  },
+  "egitim_bilgileri": [
+    {
+      "okul": "OSTİM Technical University",
+      "bolum": "Belirtilmemiş",
+      "mezuniyet": "Belirtilmemiş"
+    }
+  ],
+  "is_deneyimi": [
+    {
+      "sirket": "Maren Robotics Ankara",
+      "pozisyon": "AI Engineer",
+      "tarih": "Sep 2024",
+      "sorumluluklar": [
+        "Sep 2024 Present"
+      ]
+    }
+  ],
+  "projeler": [
+    {
+      "proje_adi": "Belirtilmemiş",
+      "aciklama": "by automating customer support pr ocesses with Natural Language \nProcessing (NLP) .",
+      "kullanilan_teknolojiler": [
+        "Natural Language \nProcessing (NLP)"
+      ]
+    },
+    {
+      "proje_adi": "a vision-based detection",
+      "aciklama": "Maren Robotics Ankara Part-T ime AI Engineer - Sep 2024 Present Developed a vision-based detection system using computer vision algorithms to identify and track humans and objects on water , sending real-time alerts .",
+      "kullanilan_teknolojiler": [
+        "computer vision algorithms to identify and track humans and objects on water"
+      ]
+    },
+    {
+      "proje_adi": "and implemented AI",
+      "aciklama": "Designed and implemented AI models integrated with embedded systems for real-time data pr ocessing and decision-making in aquatic envir onments .",
+      "kullanilan_teknolojiler": [
+        "embedded systems for real-time data pr ocessing and decision-making in aquatic envir onments"
+      ]
+    },
+    {
+      "proje_adi": "an AI-based surface",
+      "aciklama": "Developed an AI-based surface r escue system for autonomous aquatic r escue devices .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "an AI-power ed",
+      "aciklama": "Created an AI-power ed meeting automation system that transcribes meeting audio and converts it into actionable tasks for improved productivity .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "AI solutions to",
+      "aciklama": "Implemented AI solutions to improve operational efficiency and real-time safety monitoring through visual data analysis .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "a machine learning-based",
+      "aciklama": "OSTİM Organized Industrial Zone Dir ectorate Ankara AI Intern - Jun 2024 Sep 2024 Developed a machine learning-based r evenue for ecasting tool that improved accuracy from 64% to 96% .",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "an AI-powered interview",
+      "aciklama": "io/login I developed an AI-powered interview automation system that streamlines the hiring process by automating CV analysis, interview question generation, and real-time sentiment analysis.",
+      "kullanilan_teknolojiler": []
+    },
+    {
+      "proje_adi": "an AI-powered surface",
+      "aciklama": "Maren Robotics Ankara AI-Powered Surface Rescue System for Fasty Life-Sa I developed an AI-powered surface rescue system for Fasty , an autonomous rescue drone, using computer vision algorithms to detect and track humans and objects on the water's surface.",
+      "kullanilan_teknolojiler": [
+        "computer vision algorithms to detect and track humans and objects on the water's surface"
+      ]
+    }
+  ],
+  "guclu_yonler": [
+    "Eğitim odaklı",
+    "Teknik yetkinlikler"
+  ],
+  "gelistirilmesi_gereken_yonler": [
+    "Yumuşak beceriler (soft skills) vurgulanabilir"
+  ],
+  "uygun_pozisyonlar": [
+    "Kıdemli Ai Engineer",
+    "Yazılım Geliştirici"
+  ],
+  "yetenek_ozeti": "Furkan Sevinç, None OSTİM Technical University mezunudur. AI Engineer alanlarında çalışmıştır. Teknik yetkinlikleri arasında Python, Javascript, Sql ve Artificial Intelligence, Machine Learning, Computer Vision bulunmaktadır. Yabancı dil olarak English (B1) bilmektedir. Güçlü yönleri arasında Eğitim odaklı ve Teknik yetkinlikler bulunmaktadır."
+}

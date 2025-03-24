@@ -1,0 +1,36 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Kişinin tam adı",
+    "email": "",
+    "telefon": "XXXXXXXXX",
+    "lokasyon": "Ankara, Türkiye",
+    "linkedin": "https://www.linkedin.com/in/xxxxx/",
+    "web_sitesi": ""
+  },
+  "cv_puanlama": {
+    "toplam_puan": 50,
+    "egitim_puani": 50,
+    "deneyim_puani": 50,
+    "beceri_puani": 50,
+    "proje_puani": 50
+  },
+  "beceriler": {
+    "teknik_beceriler": [],
+    "yazilim_dilleri": [],
+    "diller": [],
+    "soft_beceriler": []
+  },
+  "egitim_bilgileri": [],
+  "is_deneyimi": [],
+  "projeler": [],
+  "guclu_yonler": [
+    "Belirtilmemiş"
+  ],
+  "gelistirilmesi_gereken_yonler": [
+    "Belirtilmemiş"
+  ],
+  "uygun_pozisyonlar": [
+    "Belirtilmemiş"
+  ],
+  "yetenek_ozeti": "CV analizi sırasında hata oluştu, yetenek özeti çıkarılamadı."
+}

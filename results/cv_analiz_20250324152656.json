@@ -1,0 +1,30 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Belirtilmemiş",
+    "email": "Belirtilmemiş",
+    "telefon": "Belirtilmemiş",
+    "lokasyon": "Belirtilmemiş",
+    "linkedin": "Belirtilmemiş",
+    "github": "Belirtilmemiş"
+  },
+  "egitim_bilgileri": [],
+  "is_deneyimi": [],
+  "liderlik_deneyimi": [],
+  "beceriler": {
+    "teknik_beceriler": [],
+    "programlama_dilleri": [],
+    "diger_yetenekler": [],
+    "diller": [],
+    "sertifikalar": []
+  },
+  "projeler": [],
+  "kalite_analizi": {
+    "guclu_yonler": [],
+    "eksikler": [],
+    "oneriler": [],
+    "genel_skor": 0,
+    "kariyer_hedefleri": []
+  },
+  "referanslar": [],
+  "analiz_tarihi": "24.03.2025 15:26"
+}

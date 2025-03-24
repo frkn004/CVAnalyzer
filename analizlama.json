@@ -1,0 +1,45 @@
+{
+  "kisisel_bilgiler": {
+    "isim": "Furkan Sevinç",
+    "email": "sevinc.furkan04@gmail.com",
+    "telefon": "0531 835 41 11"
+  },
+  "egitim": [
+    {
+      "okul": "OSTİM Technical University",
+      "bolum": null,
+      "tarih": null
+    }
+  ],
+  "beceriler": [
+    "Microsoft Office (Excel, Word, PowerPoint)",
+    "Python",
+    "C/C++",
+    "JavaScript",
+    "MySQL",
+    "HTML & CSS",
+    "SQL"
+  ],
+  "is_deneyimi": [
+    {
+      "sirket": "Maren Robotics",
+      "pozisyon": "Part-Time AI Engineer",
+      "tarih": "Sep 2024 - Present"
+    },
+    {
+      "sirket": "AIVA Tech",
+      "pozisyon": "AI Technical and Software Engineer",
+      "tarih": "Aug 2024 - Present"
+    },
+    {
+      "sirket": "Limak Cement",
+      "pozisyon": "AI Intern",
+      "tarih": "Feb 2024 - Jul 2025"
+    },
+    {
+      "sirket": "OSTİM Organized Industrial Zone Directorate",
+      "pozisyon": "AI Intern",
+      "tarih": "Jun 2024 - Sep 2024"
+    }
+  ]
+}

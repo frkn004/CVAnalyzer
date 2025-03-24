@@ -1,0 +1,206 @@
+Furkan Sevinç
+Ankara | 0531 835 41 11 | sevinc.furkan04@gmail.com | LinkedIn Link | GitHub Link | My StartUp
+
+EDUCATION
+
+OSTİM Technical University
+
+WORK EXPERIENCE
+
+Maren Robotics
+
+Part-Time AI Engineer
+
+Ankara
+
+Graduation Date: Jun 2028
+
+Ankara
+Sep 2024 Present
+ - 
+
+Developed a vision-based detection system using computer vision algorithms to identify and track humans 
+and objects on water, sending real-time alerts.
+Currently developing a product to detect drowning and fall incidents in pools, using machine learning and 
+computer vision techniques to identify abnormal movements and send real-time alerts.
+Designed and implemented AI models integrated with embedded systems for real-time data processing and 
+decision-making in aquatic environments.
+Applied advanced algorithms for object recognition, classification, and tracking in dynamic water settings, 
+improving emergency response system efficiency and reliability.
+Developed an AI-based surface rescue system for autonomous aquatic rescue devices.
+
+AIVA Tech
+
+AI Technical and Software Engineer
+
+Istanbul
+
+Aug 2024 Present
+ - 
+
+Developed an AI-powered HR Assistant, automating CV analysis, interview question generation, and real-time 
+
+interview simulations to improve recruitment efficiency.
+Created an AI-powered meeting automation system that transcribes meeting audio and converts it into 
+actionable tasks for improved productivity.
+Contributed to the development of internal automation modules, enhancing process efficiency.
+Focused on prompt engineering, improving prompt structures for better accuracy and effectiveness in large 
+language models (LLMs).
+Contributed to AI Call Center projects by automating customer support processes with Natural Language 
+Processing (NLP).
+Provided technical support for AI solutions, focusing on debugging, system optimization, and performance 
+enhancements.
+Currently working on an AI Call Center project, automating customer support processes using Natural 
+Language Processing (NLP).
+
+Limak Cement
+
+AI Intern
+
+Ankara
+Feb 2024 Jul 2025
+ - 
+
+Cleaned and transformed over 102 million data entries for machine learning applications.
+Developed and integrated machine learning models to optimize energy use in grinding mill operations.
+
+Trained a model using 20,000 data points to detect if factory workers are wearing helmets, improving workplace 
+safety.
+Implemented AI solutions to improve operational efficiency and real-time safety monitoring through visual 
+data analysis.
+
+OSTİM Organized Industrial Zone Directorate
+
+AI Intern
+
+Ankara
+
+Jun 2024 Sep 2024
+ - 
+
+Developed a machine learning-based revenue forecasting tool that improved accuracy from 64% to 96%.
+Applied advanced algorithms to optimize data processing and increase prediction accuracy.
+
+OSTİMTech Technology Transfer Office
+
+Intern
+
+Ankara
+Feb 2024 Jun 2025
+ - 
+
+Gained insights into Technology Transfer Office (TTO) operations and contributed to process management.
+
+Gained experience in academic and industrial collaborations.
+
+PROJECT EXPERIENCE
+
+AIVA Tech
+AI Interview Automation Platform - AIVA Tech
+Link: https://mulakat.aivatech.io/login
+I developed an AI-powered interview automation system that streamlines the hiring process by automating CV 
+
+Istanbul
+
+analysis, interview question generation, and real-time sentiment analysis.
+
+CV Analysis: The system analyzes candidate CVs to assess qualifications and suitability for specific roles.
+Dynamic Question Generation: It generates personalized interview questions based on the candidate's 
+background and the job's requirements, ensuring a tailored interview experience.
+
+Real-Time Sentiment Analysis: While candidates respond, the system performs sentiment analysis on their 
+answers, providing insights into their emotional tone and communication style.
+Post-Interview Reporting: After the interview, the system generates a comprehensive performance report and 
+sends it to the HR platform via webhook for further evaluation. Benefits: This system saves time, enhances 
+
+objectivity in hiring decisions, and provides valuable insights into candidate suitability beyond just qualifications.
+
+Maren Robotics
+AI-Powered Surface Rescue System for Fasty Life-Sa
+
+Ankara
+
+I developed an AI-powered surface rescue system for Fasty, an autonomous rescue drone, using computer vision 
+algorithms to detect and track humans and objects on the water's surface. The system sends real-time notifications for 
+
+immediate response, ensuring faster emergency interventions. Additionally, the system identifies potential dangers, 
+such as drowning incidents, by detecting abnormal movements and providing actionable alerts for intervention.
+
+Object Detection: The system uses advanced computer vision algorithms to identify and track humans and objects 
+on the water's surface.
+
+Real-Time Notifications: Once a human or object is detected, the system immediately sends notifications to the 
+relevant emergency response teams.
+
+AI Integration: I integrated AI models into the drone's embedded system, enabling real-time decision-making and 
+action.
+
+Enhanced Safety: The system improves aquatic safety by identifying potential dangers and enabling quick 
+intervention.
+
+AIVA Tech
+
+AIVA Meeting Speech Recognition System
+
+Istanbul
+
+This system is designed to capture and analyze spoken content during meetings in real-time. It converts spoken 
+language into text using advanced speech recognition technology and then applies natural language processing (NLP) 
+
+to identify key topics and individuals mentioned during the discussion. Based on this analysis, the system 
+automatically generates actionable commands, such as creating meeting summaries, scheduling follow-up tasks, or 
+
+triggering notifications for specific action items. This automation enhances meeting productivity by ensuring that 
+critical points and decisions are captured accurately and promptly.
+
+Real-Time Speech Recognition: Transcribes spoken words into text instantly to ensure no data is lost during the 
+meeting.
+Topic Extraction: Utilizes NLP algorithms to identify and highlight the main topics and discussion points.
+Person Identification: Detects names and roles mentioned during the meeting, mapping out who is associated 
+
+with each discussion point.
+Automated Command Generation: Based on the identified topics and individuals, the system can automatically 
+create commands such as calendar events, task assignments, or summary reports.
+Seamless Integration: Easily integrates with existing workflows and tools (e.g., email, calendar, project 
+management systems) to streamline post-meeting follow-ups.
+
+LEADERSHIP EXPERIENCE
+
+PandoraAI
+
+Financial Relations Coordinator
+
+Managing the club's finances and finding new sponsorships.
+
+Ankara
+Feb 2024 Present
+ - 
+
+Artificial Intelligence and Technology Association
+Co-Chair
+
+Istanbul
+
+Jul 2024 Present
+ - 
+
+I serve as the Co-Chair of the Artificial Intelligence and Technology Association, an organization dedicated to 
+bringing AI clubs together across Turkey. We currently have 6,000 members.
+
+SKILLS & INTERESTS
+
+Skills Microsoft Office (Excel, Word, PowerPoint) , Python, C/C++ , JavaScript , MySQL , HTML & CSS , SQL
+
+: 
+
+Languages English B1
+: 
+
+REFERENCES
+
+Emre Ege / Maren Robotics / 0533 167 3044 / emre.ege@marenrobotics.com
+Suleyman Kaplan / AIVA Tech / 0531 826 16 42 / suleyman@aivatech.io
+Bahattin Gökhan Topal / OSTİMTech Technology Transfer Office / 0532 742 02 85 / 
+gökhan.topal@ostimteknik.edu.tr
+
+
